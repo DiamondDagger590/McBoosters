@@ -1,0 +1,6 @@
+name: McBoosters
+version: ${project.version}
+main: com.diamonddagger.mcboosters.McBoosters
+api-version: 1.13
+softdepend: [McRPG, mcMMO, Jobs]
+authors: [DiamondDagger590]
