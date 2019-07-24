@@ -1,0 +1,7 @@
+StoredThanks:
+  Rewards:
+    VanillaExp: 1
+    Commands:
+      1:
+        Command: 'blah'
+        Amount: 5

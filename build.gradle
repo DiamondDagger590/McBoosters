@@ -1,0 +1,70 @@
+plugins {
+    id 'java'
+    id 'maven'
+    id 'io.franzbecker.gradle-lombok' version '1.14'
+    id 'com.github.johnrengelman.shadow' version '2.0.4'
+}
+
+//from now on this is how you'll change version
+def versionObj = new Version(major: 1, minor: 1, patch: 0, state: 'BETA')
+version = "${versionObj.toString()}"
+
+group 'com.diamonddagger590'
+version = "${versionObj.toString()}"
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    jcenter()
+    mavenLocal()
+    maven { url 'https://repo.aikar.co/content/groups/aikar/' }
+    maven { url 'https://jitpack.io' }
+    maven { url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
+    maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
+    maven { url 'https://nexus.articdive.de/repository/maven-public/' }
+}
+
+dependencies {
+    compileOnly 'org.spigotmc:spigot-api:1.13.2-R0.1-SNAPSHOT'
+    compileOnly 'de.articdive:EnumToYAML:1.0-SNAPSHOT'
+}
+
+processResources {
+    from(sourceSets.main.resources.srcDirs) {
+        expand 'pluginVersion': version
+        include 'plugin.yml'
+    }
+}
+
+shadowJar {
+    archiveName = "McBoosters-${version}.jar"
+}
+
+artifacts {
+    archives shadowJar
+}
+
+lombok {
+    version = "1.18.4"
+    sha256 = ""
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+class Version {
+
+    String major, minor, patch, state, full
+
+    String getFullVersion() {
+        full = "$major.$minor.$patch-$state"
+        return full
+    }
+
+    String toString() {
+        getFullVersion()
+    }
+}
