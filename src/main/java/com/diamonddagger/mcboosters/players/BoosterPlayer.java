@@ -9,16 +9,16 @@ import java.util.UUID;
 
 public class BoosterPlayer {
 
-    @Getter
-    private Player player;
+  @Getter
+  private Player player;
 
-    @Getter
-    private UUID uuid;
+  @Getter
+  private UUID uuid;
 
-    private HashMap<Booster, Integer> boosters;
+  private HashMap<Booster, Integer> boosters;
 
-    private BoosterPlayer(Player p){
-        this.player = p;
-        this.uuid = p.getUniqueId();
-    }
+  private BoosterPlayer(Player p){
+    this.player = p;
+    this.uuid = p.getUniqueId();
+  }
 }
