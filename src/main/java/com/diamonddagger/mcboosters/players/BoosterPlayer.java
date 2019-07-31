@@ -1,6 +1,5 @@
 package com.diamonddagger.mcboosters.players;
 
-import com.diamonddagger.mcboosters.boosters.Booster;
 import lombok.Getter;
 import org.bukkit.entity.Player;
 
@@ -15,10 +14,34 @@ public class BoosterPlayer {
   @Getter
   private UUID uuid;
 
-  private HashMap<Booster, Integer> boosters;
+  private HashMap<String, Integer> boosters;
 
   private BoosterPlayer(Player p){
     this.player = p;
     this.uuid = p.getUniqueId();
+  }
+
+  public boolean doesPlayerHaveBooster(String booster){
+  	return boosters.containsKey(booster);
+  }
+
+  public int getBoosterAmount(String booster){
+  	return boosters.getOrDefault(booster, 0);
+  }
+
+  public void setBoosterAmount(String boosterType, int amount){
+  	boosters.put(boosterType, amount);
+  }
+
+  public void decrementBoosterAmount(String boosterType){
+  	if(boosters.containsKey(boosterType)){
+  		int amount = boosters.get(boosterType);
+  		if(amount - 1 <= 0){
+  			boosters.remove(boosterType);
+  		}
+  		else{
+  			boosters.replace(boosterType, amount - 1);
+		  }
+	  }
   }
 }

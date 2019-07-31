@@ -1,5 +1,7 @@
 package com.diamonddagger.mcboosters;
 
+import com.diamonddagger.mcboosters.boosters.BoosterManager;
+import com.diamonddagger.mcboosters.discord.DiscordManager;
 import com.diamonddagger.mcboosters.players.PlayerManager;
 import com.diamonddagger.mcboosters.util.FileManager;
 import lombok.Getter;
@@ -12,6 +14,10 @@ public final class McBoosters extends JavaPlugin {
   private static McBoosters instance;
   @Getter
   private FileManager fileManager = new FileManager();
+  @Getter
+  private BoosterManager boosterManager;
+  @Getter
+  private DiscordManager discordManager;
   @Getter
   private PlayerManager playerManager;
 
