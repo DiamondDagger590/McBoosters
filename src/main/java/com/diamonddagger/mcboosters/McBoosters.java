@@ -20,6 +20,8 @@ public final class McBoosters extends JavaPlugin {
   private DiscordManager discordManager;
   @Getter
   private PlayerManager playerManager;
+  @Getter
+  private boolean mcrpgEnabled;
 
 
 
@@ -40,6 +42,6 @@ public final class McBoosters extends JavaPlugin {
   }
 
   public String getPluginPrefix(){
-    return "";
+    return getLangFile().getString("PluginPrefix");
   }
 }

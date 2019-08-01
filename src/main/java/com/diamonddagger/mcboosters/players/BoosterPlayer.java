@@ -16,13 +16,17 @@ public class BoosterPlayer {
 
   private HashMap<String, Integer> boosters;
 
-  private BoosterPlayer(Player p){
+  BoosterPlayer(Player p){
     this.player = p;
     this.uuid = p.getUniqueId();
   }
 
   public boolean doesPlayerHaveBooster(String booster){
   	return boosters.containsKey(booster);
+  }
+
+  public boolean doesPlayerHaveAnyBoosters(){
+  	return boosters.values().stream().anyMatch(i -> i > 0);
   }
 
   public int getBoosterAmount(String booster){

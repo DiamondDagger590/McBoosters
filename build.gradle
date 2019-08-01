@@ -29,6 +29,7 @@ repositories {
 dependencies {
     compileOnly 'org.spigotmc:spigot-api:1.13.2-R0.1-SNAPSHOT'
     compileOnly 'de.articdive:EnumToYAML:1.0-SNAPSHOT'
+    compile files('libs/McRPG-1.1.1-BETA.jar')
 }
 
 processResources {

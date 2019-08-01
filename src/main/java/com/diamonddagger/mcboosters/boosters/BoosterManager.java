@@ -41,6 +41,9 @@ public class BoosterManager {
     return passed;
   }
 
+  public Set<String> getAllBoosters(){
+  	return boosterFiles.keySet();
+  }
   public FileConfiguration getBoosterFile(String booster){
     return boosterFiles.get(booster);
   }
