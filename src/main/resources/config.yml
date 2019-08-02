@@ -16,3 +16,5 @@
 FirstGUI:
   File: 'guis\homegui.yml'
   GUIName: 'Home'
+Configuration:
+  MaxAmountOfBoosters: 1

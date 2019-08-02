@@ -1,5 +1,6 @@
 Booster:
-  Name: 'Mixed Booster'
+  Name: 'mixedbooster'
+  DisplayName: 'Mixed Booster'
   Boosts:
     McRPG:
       Skills:

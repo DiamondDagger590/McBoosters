@@ -13,6 +13,8 @@ public interface Booster {
 
   UUID getOwner();
 
+  String getDisplayName();
+
   Set<UUID> getThankedPlayers();
 
   void thank(Player thanker);

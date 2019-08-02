@@ -31,7 +31,9 @@ public class BaseBooster implements Booster{
 	@Getter
 	private Set<UUID> thankedPlayers;
 
-	public BaseBooster(UUID boosterOwner, BoostWrapper boostWrapper, ThankReward thankReward, long endTime){
+	private String displayName;
+
+	public BaseBooster(UUID boosterOwner, BoostWrapper boostWrapper, ThankReward thankReward, long endTime, String displayName){
 		this.boosterOwner = boosterOwner;
 		this.boostWrapper = boostWrapper;
 		this.thankReward = thankReward;
@@ -49,6 +51,9 @@ public class BaseBooster implements Booster{
 		this.thankedPlayers = backupFile.getStringList(key + ".ThankedPlayers").stream().map(UUID::fromString).collect(Collectors.toSet());
 	}
 
+	public String getDisplayName(){
+		return displayName;
+	}
 
 	public void thank(Player thanker){
 		OfflinePlayer owner = Bukkit.getOfflinePlayer(boosterOwner);
@@ -83,37 +88,39 @@ public class BaseBooster implements Booster{
 			}
 		}
 		else{
-			File playerStorageFile = new File(McBoosters.getInstance().getDataFolder(), File.separator + "playerstorage.yml");
-			FileConfiguration storage = YamlConfiguration.loadConfiguration(playerStorageFile);
-			String key = "Players." + boosterOwner.toString();
-			if(storage.contains("Players." + boosterOwner.toString())){
-				if(vanillaExp > 0){
-					if(storage.contains(key + ".VanillaExp")){
-						storage.set(key + ".VanillaExp", vanillaExp + storage.getInt(key + ".VanillaExp"));
-					}
-					else{
-						storage.set(key + ".VanillaExp", vanillaExp);
-					}
+			File playerStorageFolder = new File(McBoosters.getInstance().getDataFolder(), File.separator + "playerdata");
+			if(!playerStorageFolder.exists()){
+				playerStorageFolder.mkdir();
+			}
+			File playerFile = new File(playerStorageFolder, File.separator + owner.getUniqueId().toString() + ".yml");
+			if(!playerFile.exists()){
+				try{
+					playerFile.createNewFile();
 				}
-				if(mcrpgExp > 0){
-					if(storage.contains(key + ".McRPGExp")){
-						storage.set(key + ".McRPGExp", vanillaExp + storage.getInt(key + ".McRPGExp"));
-					}
-					else{
-						storage.set(key + ".McRPGExp", mcrpgExp);
-					}
+				catch(IOException e){
+					e.printStackTrace();
 				}
 			}
-			else{
-				if(vanillaExp > 0){
-					storage.set(key + ".VanillaExp", vanillaExp);
+			//TODO
+			FileConfiguration storage = YamlConfiguration.loadConfiguration(playerFile);
+			if(vanillaExp > 0){
+				if(storage.contains("VanillaExp")){
+					storage.set("VanillaExp", vanillaExp + storage.getInt("VanillaExp"));
 				}
-				if(mcrpgExp > 0){
-					storage.set(key + ".McRPGExp", mcrpgExp);
+				else{
+					storage.set("VanillaExp", vanillaExp);
+				}
+			}
+			if(mcrpgExp > 0){
+				if(storage.contains("McRPGExp")){
+					storage.set("McRPGExp", vanillaExp + storage.getInt("McRPGExp"));
+				}
+				else{
+					storage.set("McRPGExp", mcrpgExp);
 				}
 			}
 			try{
-				storage.save(playerStorageFile);
+				storage.save(playerFile);
 			}
 			catch(IOException e){
 				e.printStackTrace();

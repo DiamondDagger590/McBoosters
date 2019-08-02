@@ -4,3 +4,7 @@ main: com.diamonddagger.mcboosters.McBoosters
 api-version: 1.13
 softdepend: [McRPG, mcMMO, Jobs]
 authors: [DiamondDagger590]
+commands:
+  mcbooster:
+    description: Main Command for McBoosters
+    aliases: [mcb, boosters]

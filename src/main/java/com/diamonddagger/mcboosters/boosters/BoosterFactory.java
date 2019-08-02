@@ -16,7 +16,7 @@ class BoosterFactory{
 	  calendar.add(Calendar.SECOND, config.getInt("Booster.Duration", 10));
 	  long endTime = calendar.getTimeInMillis();
 	  ThankReward thankReward = new ThankReward(config);
-		return new BaseBooster(owner, boostWrapper, thankReward, endTime);
+		return new BaseBooster(owner, boostWrapper, thankReward, endTime, config.getString("Booster.DisplayName"));
 	}
 
 	static Booster getBooster(FileConfiguration boosterFile, FileConfiguration backupFile, String key){
