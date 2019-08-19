@@ -1,5 +1,9 @@
 #Name is used internally. Changing this after distributing boosters will mess up the plugin
 mixedbooster:
+  DiscordSupport:
+    Enabled: true
+    StartChannel: '410995386136920064'
+    EndChannel: '410995386136920064'
   #The name to be used in GUIs, messages, etc
   DisplayName: '&aMixed Booster'
   #What types of boosts should this plugin provide

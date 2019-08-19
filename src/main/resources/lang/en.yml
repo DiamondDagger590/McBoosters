@@ -12,3 +12,6 @@ Messages:
   Boosters:
     Ended: '&e%Player%s %BoosterType% &chas ended.'
     Started: '&e%Player% &ahas started a &e%BoosterType%'
+  DiscordMessage:
+    Started: '@here %Player% has started a %BoosterType%! Log in to thank them!'
+    Ended: '%Player%s %BoosterType% has expired! Log in to activate another one!'

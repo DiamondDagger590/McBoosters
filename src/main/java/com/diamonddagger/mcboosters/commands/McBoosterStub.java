@@ -88,7 +88,59 @@ public class McBoosterStub implements CommandExecutor {
           }
         }
       }
-
+    }
+    else{
+      // /mcbooster admin give %player% mixedbooster 1
+      if(args.length < 5){
+        sender.sendMessage(Methods.color(McBoosters.getInstance().getPluginPrefix() + McBoosters.getInstance().getLangFile().getString("Messages.Util.HelpPrompt")));
+        return true;
+      }
+      else{
+        if(args[0].equalsIgnoreCase("admin")){
+          if(args[1].equalsIgnoreCase("give")){
+              if(Methods.hasPlayerLoggedInBefore(args[2])){
+                if(McBoosters.getInstance().getBoosterManager().isBooster(args[3])){
+                  if(Methods.isInt(args[4])){
+                    OfflinePlayer target = Bukkit.getOfflinePlayer(args[2]);
+                    if(McBoosters.getInstance().getPlayerManager().isPlayerStored(target.getUniqueId())){
+                      McBoosters.getInstance().getPlayerManager().getPlayer(target.getUniqueId()).giveBoosters(args[3], Integer.parseInt(args[4]));
+                      sender.sendMessage(Methods.color(McBoosters.getInstance().getPluginPrefix() +
+                              McBoosters.getInstance().getLangFile().getString("Messages.Admin.BoostersGiven".replace("%Player%", target.getName())
+                                      .replace("%Amount%", args[4]).replace("%BoosterType%", args[3]))));
+                      if(target.isOnline()){
+                        ((Player) target).sendMessage(Methods.color(McBoosters.getInstance().getPluginPrefix()
+                                + McBoosters.getInstance().getLangFile().getString("Messages.Admin.Received").replace("%Amount%", args[4])
+                                .replace("%BoosterType%", args[3])));
+                      }
+                      return true;
+                    }
+                    else{
+                      BoosterPlayer boosterPlayer = new BoosterPlayer(target);
+                      boosterPlayer.giveBoosters(args[3], Integer.parseInt(args[4]));
+                      sender.sendMessage(Methods.color(McBoosters.getInstance().getPluginPrefix() +
+                              McBoosters.getInstance().getLangFile().getString("Messages.Admin.BoostersGiven".replace("%Player%", target.getName())
+                                      .replace("%Amount%", args[4]).replace("%BoosterType%", args[3]))));
+                      return true;
+                    }
+                  }
+                  else{
+                    sender.sendMessage(Methods.color(McBoosters.getInstance().getPluginPrefix() + McBoosters.getInstance().getLangFile().getString("Messages.Util.NotAnInt")));
+                    return true;
+                  }
+                }
+                else{
+                  sender.sendMessage(Methods.color(McBoosters.getInstance().getPluginPrefix() + McBoosters.getInstance().getLangFile().getString("Messages.Util.NotABooster")
+                          .replace("%BoosterType%", args[3])));
+                  return true;
+                }
+              }
+              else{
+                sender.sendMessage(Methods.color(McBoosters.getInstance().getPluginPrefix() + McBoosters.getInstance().getLangFile().getString("Messages.Util.PlayerNotLoggedIn")));
+                return true;
+              }
+          }
+        }
+      }
     }
     return false;
   }

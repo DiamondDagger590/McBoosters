@@ -17,3 +17,8 @@ Configuration:
   #When there are multiple of the same booster active, how should the boost be decided
   StackedBoosterBoost: 'boost + ((extra_boost-1)/2)'
   LangFile: 'en'
+  Discord:
+    #How many seconds after the last cached message should the plugin wait to listen for others?
+    MessageLimiterDuration: 300
+    #Only keep pings from the first message, and remove them from all of the other ones
+    RemovePings: true
