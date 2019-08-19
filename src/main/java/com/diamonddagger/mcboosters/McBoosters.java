@@ -1,19 +1,16 @@
 package com.diamonddagger.mcboosters;
 
+import com.diamonddagger.mcboosters.announcer.Announcer;
 import com.diamonddagger.mcboosters.boosters.BoosterManager;
 import com.diamonddagger.mcboosters.commands.McBoosterStub;
 import com.diamonddagger.mcboosters.discord.DiscordManager;
-import com.diamonddagger.mcboosters.events.vanilla.KillEvent;
-import com.diamonddagger.mcboosters.events.vanilla.McRPGExpEvent;
-import com.diamonddagger.mcboosters.events.vanilla.PlayerLogin;
-import com.diamonddagger.mcboosters.events.vanilla.PlayerLogout;
+import com.diamonddagger.mcboosters.events.vanilla.*;
 import com.diamonddagger.mcboosters.players.PlayerManager;
 import com.diamonddagger.mcboosters.util.FileManager;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
-import us.eunoians.mcrpg.events.vanilla.BreakEvent;
 
 public final class McBoosters extends JavaPlugin {
 
@@ -28,7 +25,9 @@ public final class McBoosters extends JavaPlugin {
   @Getter
   private PlayerManager playerManager;
   @Getter
-  private boolean mcrpgEnabled;
+  private Announcer announcer;
+  @Getter
+  private boolean mcrpgEnabled = false;
 
 
 
@@ -39,12 +38,16 @@ public final class McBoosters extends JavaPlugin {
     boosterManager = new BoosterManager();
     discordManager = new DiscordManager();
     playerManager = new PlayerManager();
+    announcer = new Announcer();
+
     if(Bukkit.getPluginManager().isPluginEnabled("McRPG")){
       mcrpgEnabled = true;
       Bukkit.getPluginManager().registerEvents(new McRPGExpEvent(), this);
     }
+    Bukkit.getPluginManager().registerEvents(new JobsEvents(), this);
+    Bukkit.getPluginManager().registerEvents(new InvClick(), this);
+    Bukkit.getPluginManager().registerEvents(new InvClose(), this);
     Bukkit.getPluginManager().registerEvents(new KillEvent(), this);
-    Bukkit.getPluginManager().registerEvents(new BreakEvent(), this);
     Bukkit.getPluginManager().registerEvents(new PlayerLogin(), this);
     Bukkit.getPluginManager().registerEvents(new PlayerLogout(), this);
     getCommand("mcbooster").setExecutor(new McBoosterStub());
@@ -52,11 +55,11 @@ public final class McBoosters extends JavaPlugin {
 
   @Override
   public void onDisable(){
-    // Plugin shutdown logic
+    boosterManager.backup();
   }
 
-  public FileConfiguration getLangFile(){
-    return null;
+  public FileConfiguration getLangFile() {
+    return FileManager.Files.fromString(getConfig().getString("Configuration.LangFile")).getFile();
   }
 
   public String getPluginPrefix(){

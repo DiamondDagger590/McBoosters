@@ -1,14 +1,11 @@
 package com.diamonddagger.mcboosters.players;
 
 import com.diamonddagger.mcboosters.McBoosters;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -19,6 +16,10 @@ public class PlayerManager {
     private BukkitTask saveTask;
 
     public PlayerManager(){
+        File playerDataFolder = new File(McBoosters.getInstance().getDataFolder(), File.separator + "playerdata");
+        if(!playerDataFolder.exists()){
+            playerDataFolder.mkdir();
+        }
         startSaveTask();
     }
 
@@ -49,27 +50,11 @@ public class PlayerManager {
     }
 
     private void startSaveTask(){
-        File file = new File(McBoosters.getInstance().getDataFolder(), File.separator + "playerstorage.yml");
         saveTask = new BukkitRunnable(){
             @Override
             public void run(){
-                FileConfiguration storage = YamlConfiguration.loadConfiguration(file);
-                for(UUID uuid : players.keySet()){
-                    BoosterPlayer bp = players.get(uuid);
-                    if(bp.doesPlayerHaveAnyBoosters()){
-                        String key = "Players." + uuid.toString() + ".";
-                        for(String s : McBoosters.getInstance().getBoosterManager().getAllBoosters()){
-                            if(bp.doesPlayerHaveBooster(s)){
-                                storage.set(key + s, bp.getBoosterAmount(s));
-                            }
-                        }
-                    }
-                }
-                try{
-                    storage.save(file);
-                }
-                catch(IOException e){
-                    e.printStackTrace();
+                for(BoosterPlayer bp : players.values()){
+                    bp.save();
                 }
             }
         }.runTaskTimerAsynchronously(McBoosters.getInstance(), 120L, 5 * 60 * 20);

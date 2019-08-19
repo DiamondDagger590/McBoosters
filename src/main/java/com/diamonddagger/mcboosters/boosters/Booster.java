@@ -7,15 +7,15 @@ import java.util.UUID;
 
 public interface Booster {
 
-  BoostWrapper getBoostWrapper();
+  BoosterInfo getBoosterInfo();
 
   long getEndTime();
 
   UUID getOwner();
 
-  String getDisplayName();
-
   Set<UUID> getThankedPlayers();
 
   void thank(Player thanker);
+
+  boolean hasPlayerThanked(Player thanker);
 }

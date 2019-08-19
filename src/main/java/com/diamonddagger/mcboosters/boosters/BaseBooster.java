@@ -20,121 +20,139 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-public class BaseBooster implements Booster{
+public class BaseBooster implements Booster {
 
-	@Getter
-	private BoostWrapper boostWrapper;
-	@Getter
-	private ThankReward thankReward;
-	private UUID boosterOwner;
-	private long endTime;
-	@Getter
-	private Set<UUID> thankedPlayers;
+  @Getter
+  private BoosterInfo boosterInfo;
 
-	private String displayName;
+  private UUID boosterOwner;
 
-	public BaseBooster(UUID boosterOwner, BoostWrapper boostWrapper, ThankReward thankReward, long endTime, String displayName){
-		this.boosterOwner = boosterOwner;
-		this.boostWrapper = boostWrapper;
-		this.thankReward = thankReward;
-		this.endTime = endTime;
-		this.thankedPlayers = new HashSet<>();
-	}
+  private long endTime;
 
-	public BaseBooster(BoostWrapper boostWrapper, ThankReward thankReward, FileConfiguration backupFile, String key){
-		this.boosterOwner = UUID.fromString(backupFile.getString(key + ".Owner"));
-		this.boostWrapper = boostWrapper;
-		this.thankReward = thankReward;
-		Calendar cal = Calendar.getInstance();
-		cal.add(Calendar.SECOND, backupFile.getInt(key + ".TimeLeft"));
-		this.endTime = cal.getTimeInMillis();
-		this.thankedPlayers = backupFile.getStringList(key + ".ThankedPlayers").stream().map(UUID::fromString).collect(Collectors.toSet());
-	}
+  @Getter
+  private Set<UUID> thankedPlayers;
 
-	public String getDisplayName(){
-		return displayName;
-	}
 
-	public void thank(Player thanker){
-		OfflinePlayer owner = Bukkit.getOfflinePlayer(boosterOwner);
-		int vanillaExp = (int) thankReward.getVanillaExpReward().getValue();
-		int mcrpgExp = 0;
-		if(McBoosters.getInstance().isMcrpgEnabled()){
-			try{
-				McRPGPlayer mp = PlayerManager.getPlayer(thanker.getUniqueId());
-				Parser p = thankReward.getMcrpgExpReward();
-				p.setVariable("power_level", mp.getPowerLevel());
-				mcrpgExp = (int) p.getValue();
-				mp.giveRedeemableExp(mcrpgExp);
-				mp.saveData();
-			}
-			catch(McRPGPlayerNotFoundException e){
-				return;
-			}
-		}
-		thanker.giveExp(vanillaExp);
-		if(owner.isOnline()){
-			Player onlineOwner = (Player) owner;
-			onlineOwner.giveExp(vanillaExp);
-			if(mcrpgExp > 0){
-				try{
-					McRPGPlayer mp = PlayerManager.getPlayer(onlineOwner.getUniqueId());
-					mp.giveRedeemableExp(mcrpgExp);
-					mp.saveData();
-				}
-				catch(McRPGPlayerNotFoundException e){
-					e.printStackTrace();
-				}
-			}
-		}
-		else{
-			File playerStorageFolder = new File(McBoosters.getInstance().getDataFolder(), File.separator + "playerdata");
-			if(!playerStorageFolder.exists()){
-				playerStorageFolder.mkdir();
-			}
-			File playerFile = new File(playerStorageFolder, File.separator + owner.getUniqueId().toString() + ".yml");
-			if(!playerFile.exists()){
-				try{
-					playerFile.createNewFile();
-				}
-				catch(IOException e){
-					e.printStackTrace();
-				}
-			}
-			//TODO
-			FileConfiguration storage = YamlConfiguration.loadConfiguration(playerFile);
-			if(vanillaExp > 0){
-				if(storage.contains("VanillaExp")){
-					storage.set("VanillaExp", vanillaExp + storage.getInt("VanillaExp"));
-				}
-				else{
-					storage.set("VanillaExp", vanillaExp);
-				}
-			}
-			if(mcrpgExp > 0){
-				if(storage.contains("McRPGExp")){
-					storage.set("McRPGExp", vanillaExp + storage.getInt("McRPGExp"));
-				}
-				else{
-					storage.set("McRPGExp", mcrpgExp);
-				}
-			}
-			try{
-				storage.save(playerFile);
-			}
-			catch(IOException e){
-				e.printStackTrace();
-			}
-		}
-	}
+  public BaseBooster(UUID boosterOwner, long endTime, BoosterInfo boosterInfo){
+    this.boosterInfo = boosterInfo;
+    this.boosterOwner = boosterOwner;
+    this.endTime = endTime;
+    this.thankedPlayers = new HashSet<>();
+  }
 
-	@Override
-	public long getEndTime(){
-		return endTime;
-	}
+  public BaseBooster(FileConfiguration backupFile, String key, BoosterInfo boosterInfo){
+    this.boosterInfo = boosterInfo;
+    this.boosterOwner = UUID.fromString(backupFile.getString(key + ".Owner"));
+    Calendar cal = Calendar.getInstance();
+    cal.add(Calendar.SECOND, backupFile.getInt(key + ".RemainingDuration"));
+    this.endTime = cal.getTimeInMillis();
+    this.thankedPlayers = backupFile.getStringList(key + ".ThankedPlayers").stream().map(UUID::fromString).collect(Collectors.toSet());
+  }
 
-	@Override
-	public UUID getOwner(){
-		return boosterOwner;
-	}
+  public String getDisplayName(){
+    return boosterInfo.getDisplayName();
+  }
+
+  @Override
+  public void thank(Player thanker){
+    OfflinePlayer owner = Bukkit.getOfflinePlayer(boosterOwner);
+    int vanillaExp = (int) boosterInfo.getThankReward().getVanillaExpReward().getValue();
+    int mcrpgExp = 0;
+    if(!boosterInfo.getThankReward().getThankerCommands().isEmpty()){
+      for(String command : boosterInfo.getThankReward().getThankerCommands()){
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("%Player%", thanker.getName()));
+      }
+    }
+    if(McBoosters.getInstance().isMcrpgEnabled()){
+      try{
+        McRPGPlayer mp = PlayerManager.getPlayer(thanker.getUniqueId());
+        Parser p = boosterInfo.getThankReward().getMcrpgExpReward();
+        p.setVariable("power_level", mp.getPowerLevel());
+        mcrpgExp = (int) p.getValue();
+        mp.giveRedeemableExp(mcrpgExp);
+        mp.saveData();
+      } catch(McRPGPlayerNotFoundException e){
+        return;
+      }
+    }
+    thanker.giveExp(vanillaExp);
+    if(owner.isOnline() && McBoosters.getInstance().isMcrpgEnabled()){
+      Player onlineOwner = (Player) owner;
+      onlineOwner.giveExp(vanillaExp);
+      if(mcrpgExp > 0){
+        try{
+          McRPGPlayer mp = PlayerManager.getPlayer(onlineOwner.getUniqueId());
+          mp.giveRedeemableExp(mcrpgExp);
+          mp.saveData();
+        } catch(McRPGPlayerNotFoundException e){
+          e.printStackTrace();
+        }
+      }
+      if(!boosterInfo.getThankReward().getOwnerCommands().isEmpty()){
+        for(String command : boosterInfo.getThankReward().getOwnerCommands()){
+          Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("%Player%", onlineOwner.getName()));
+        }
+      }
+    }
+    else{
+      File playerStorageFolder = new File(McBoosters.getInstance().getDataFolder(), File.separator + "playerdata");
+      File playerFile = new File(playerStorageFolder, File.separator + owner.getUniqueId().toString() + ".yml");
+      if(!playerFile.exists()){
+        try{
+          playerFile.createNewFile();
+        } catch(IOException e){
+          e.printStackTrace();
+        }
+      }
+      //TODO
+      FileConfiguration storage = YamlConfiguration.loadConfiguration(playerFile);
+      if(vanillaExp > 0){
+        if(storage.contains("CachedRewards.VanillaExp")){
+          storage.set("CachedRewards.VanillaExp", vanillaExp + storage.getInt("CachedRewards.VanillaExp"));
+        }
+        else{
+          storage.set("CachedRewards.VanillaExp", vanillaExp);
+        }
+      }
+      if(mcrpgExp > 0){
+        if(storage.contains("CachedRewards.McRPGExp")){
+          storage.set("CachedRewards.McRPGExp", vanillaExp + storage.getInt("CachedRewards.McRPGExp"));
+        }
+        else{
+          storage.set("CachedRewards.McRPGExp", mcrpgExp);
+        }
+      }
+      if(!boosterInfo.getThankReward().getOwnerCommands().isEmpty()){
+        int startingIter = 1;
+        if(storage.contains("CachedCommands")){
+          for(String s : storage.getConfigurationSection("CachedCommands").getKeys(false)){
+            startingIter++;
+          }
+        }
+        for(String command : boosterInfo.getThankReward().getOwnerCommands()){
+          startingIter++;
+          storage.set("CachedCommands." + startingIter, command);
+        }
+      }
+      try{
+        storage.save(playerFile);
+      } catch(IOException e){
+        e.printStackTrace();
+      }
+    }
+  }
+
+  @Override
+  public boolean hasPlayerThanked(Player thanker){
+    return thankedPlayers.contains(thanker.getUniqueId());
+  }
+  @Override
+  public long getEndTime(){
+    return endTime;
+  }
+
+  @Override
+  public UUID getOwner(){
+    return boosterOwner;
+  }
 }

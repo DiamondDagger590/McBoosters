@@ -1,2 +1,14 @@
+PluginPrefix: '&7[&1McBoosters&7]'
 Messages:
-  BoosterEnd: '&e%Owner%s %BoosterType% &cbooster has ended'
+  Util:
+    NotAnInt: '&cThe argument you entered is not an integer.'
+    NotABooster: '&e%BoosterType% &cis not a valid booster.'
+    PlayerNotLoggedIn: '&cThat player has not logged in before, therefor the command could not be completed.'
+    NoPerms: '&cYou do not have permission to execute that command.'
+    HelpPrompt: '&cInvalid command format. Please do &e/mcbooster help &cfor guidance.'
+  Admin:
+    BoostersGiven: '&aYou gave &e%Player% %Amount% %BoosterType%.'
+    BoostersReceived: '&aYou were given &e%Amount% %BoosterType%.'
+  Boosters:
+    Ended: '&e%Player%s %BoosterType% &chas ended.'
+    Started: '&e%Player% &ahas started a &e%BoosterType%'

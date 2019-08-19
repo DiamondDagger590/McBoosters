@@ -1,29 +1,21 @@
 package com.diamonddagger.mcboosters.boosters;
 
-import com.diamonddagger.mcboosters.McBoosters;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.util.Calendar;
 import java.util.UUID;
 
-class BoosterFactory{
+class BoosterFactory {
 
-	static Booster getBooster(FileConfiguration config, UUID owner){
-		McBoosters mcBoosters = McBoosters.getInstance();
+  static Booster getBooster(FileConfiguration config, UUID owner, String boosterName){
+    BoosterInfo boosterInfo = new BoosterInfo(config, boosterName);
+    Calendar calendar = Calendar.getInstance();
+    calendar.add(Calendar.SECOND, boosterInfo.getDuration());
+    long endTime = calendar.getTimeInMillis();
+    return new BaseBooster(owner, endTime, boosterInfo);
+  }
 
-		BoostWrapper boostWrapper = new BoostWrapper(config);
-		Calendar calendar = Calendar.getInstance();
-	  calendar.add(Calendar.SECOND, config.getInt("Booster.Duration", 10));
-	  long endTime = calendar.getTimeInMillis();
-	  ThankReward thankReward = new ThankReward(config);
-		return new BaseBooster(owner, boostWrapper, thankReward, endTime, config.getString("Booster.DisplayName"));
-	}
-
-	static Booster getBooster(FileConfiguration boosterFile, FileConfiguration backupFile, String key){
-		McBoosters mcBoosters = McBoosters.getInstance();
-
-		BoostWrapper boostWrapper = new BoostWrapper(boosterFile);
-		ThankReward thankReward = new ThankReward(boosterFile);
-		return new BaseBooster(boostWrapper, thankReward, backupFile, key);
-	}
+  static Booster getBooster(FileConfiguration boosterFile, FileConfiguration backupFile, String key, String boosterName){
+    return new BaseBooster(backupFile, key, new BoosterInfo(boosterFile, boosterName));
+  }
 }

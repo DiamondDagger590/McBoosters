@@ -13,8 +13,7 @@
 #   - No tabs are present: YAML only allows spaces
 #   - Indents are correct: YAML hierarchy is based entirely on indentation
 ###################################
-FirstGUI:
-  File: 'guis\homegui.yml'
-  GUIName: 'Home'
 Configuration:
-  MaxAmountOfBoosters: 1
+  #When there are multiple of the same booster active, how should the boost be decided
+  StackedBoosterBoost: 'boost + ((extra_boost-1)/2)'
+  LangFile: 'en'

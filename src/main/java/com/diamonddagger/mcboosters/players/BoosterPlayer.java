@@ -1,165 +1,154 @@
 package com.diamonddagger.mcboosters.players;
 
 import com.diamonddagger.mcboosters.McBoosters;
-import com.diamonddagger.mcboosters.util.Methods;
 import lombok.Getter;
+import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
-import us.eunoians.mcrpg.api.exceptions.McRPGPlayerNotFoundException;
-import us.eunoians.mcrpg.players.McRPGPlayer;
-import us.eunoians.mcrpg.players.PlayerManager;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public class BoosterPlayer {
 
   @Getter
-  private Player player;
-
-  @Getter
   private UUID uuid;
 
-  private HashMap<String, Integer> boosters = new HashMap<>();
+  private Map<String, Integer> boosterAmounts = new HashMap<>();
 
-  private File playerFile;
-
-  @Getter
-  private FileConfiguration storage;
+  File playerFile;
+  FileConfiguration config;
 
   public BoosterPlayer(Player p){
-    this.player = p;
     this.uuid = p.getUniqueId();
-	  File playerStorageFolder = new File(McBoosters.getInstance().getDataFolder(), File.separator + "playerdata");
-	  if(!playerStorageFolder.exists()){
-		  playerStorageFolder.mkdir();
-	  }
-	  playerFile = new File(playerStorageFolder, File.separator + uuid.toString() + ".yml");
-	  if(!playerFile.exists()){
-		  try{
-			  playerFile.createNewFile();
-		  }
-		  catch(IOException e){
-			  e.printStackTrace();
-		  }
-	  }
-	  //TODO
-	  storage = YamlConfiguration.loadConfiguration(playerFile);
-	  if(storage.contains("VanillaExp")){
-	  	int vanillaExp = storage.getInt("VanillaExp");
-	  	if(vanillaExp > 0){
-	  		p.giveExp(vanillaExp);
-	  		p.sendMessage(Methods.color(McBoosters.getInstance().getPluginPrefix() + "&While you were offline, you were given %Amount% vanilla exp").replace("%Amount%", Integer.toString(vanillaExp)));
-		  }
-	  	storage.set("VanillaExp", null);
-	  }
-	  if(storage.contains("McRPGExp")){
-		  int mcRPGExp = storage.getInt("McRPGExp");
-		  if(mcRPGExp > 0){
-			  if(McBoosters.getInstance().isMcrpgEnabled()){
-				  try{
-					  McRPGPlayer mp = PlayerManager.getPlayer(uuid);
-					  mp.giveRedeemableExp(mcRPGExp);
-					  p.sendMessage(Methods.color(McBoosters.getInstance().getPluginPrefix() + "&While you were offline, you were given %Amount% McRPG exp").replace("%Amount%", Integer.toString(mcRPGExp)));
-					  storage.set("McRPGExp", null);
-				  }
-				  catch(McRPGPlayerNotFoundException e){
-					  new BukkitRunnable(){
-						  @Override
-						  public void run(){
-							  try{
-								  McRPGPlayer mp = PlayerManager.getPlayer(uuid);
-								  mp.giveRedeemableExp(mcRPGExp);
-								  if(p.isOnline()){
-									  p.sendMessage(Methods.color(McBoosters.getInstance().getPluginPrefix() + "&While you were offline, you were given %Amount% McRPG exp").replace("%Amount%", Integer.toString(mcRPGExp)));
-								  }
-								  storage.set("McRPGExp", null);
-							  }
-							  catch(McRPGPlayerNotFoundException ex){ }
-						  }
-					  }.runTaskLater(McBoosters.getInstance(), 30 * 20);
-				  }
-			  }
-		  }
-		  storage.set("McRPGExp", null);
-	  }
-	  loadBoosters();
-	  save();
+    playerFile = new File(McBoosters.getInstance().getDataFolder(), File.separator + "playerdata" + File.separator + uuid.toString() + ".yml");
+    boolean exists = playerFile.exists();
+    if(!exists){
+      try{
+        playerFile.createNewFile();
+      } catch(IOException e){
+        e.printStackTrace();
+      }
+    }
+    config = YamlConfiguration.loadConfiguration(playerFile);
+    if(exists){
+      if(config.contains("Boosters")){
+        for(String s : config.getConfigurationSection("Boosters").getKeys(false)){
+          boosterAmounts.put(s.toLowerCase(), config.getInt("Boosters." + s));
+        }
+      }
+      //Deal with cached rewards
+      if(config.contains("CachedRewards")){
+        if(config.contains("CachedRewards.McRPGExp")){
+          //TODO
+        }
+        if(config.contains("CachedRewards.VanillaExp")){
+          p.giveExp(config.getInt("CachedRewards.VanillaExp"));
+          //TODO message
+          config.set("CahcedRewards.VanillaExp", null);
+        }
+        if(config.contains("CachedRewards.JobsMoney")){
+          //TODO
+        }
+      }
+      if(config.contains("CachedCommands")){
+        for(String s : config.getConfigurationSection("CachedCommands").getKeys(false)){
+          String key = "CachedCommands." + s + ".";
+          Bukkit.dispatchCommand(Bukkit.getConsoleSender(), config.getString(key + "Command").replace("%Player%", p.getName()));
+        }
+        config.set("CachedCommands", null);
+      }
+      try{
+        config.save(playerFile);
+      } catch(IOException e){
+        e.printStackTrace();
+      }
+    }
   }
 
-	public BoosterPlayer(UUID p){
-		this.uuid = p;
-		File playerStorageFolder = new File(McBoosters.getInstance().getDataFolder(), File.separator + "playerdata");
-		if(!playerStorageFolder.exists()){
-			playerStorageFolder.mkdir();
-		}
-		playerFile = new File(playerStorageFolder, File.separator + uuid.toString() + ".yml");
-		if(!playerFile.exists()){
-			try{
-				playerFile.createNewFile();
-			}
-			catch(IOException e){
-				e.printStackTrace();
-			}
-		}
-		storage = YamlConfiguration.loadConfiguration(playerFile);
-		loadBoosters();
-		save();
-	}
-
-  public boolean doesPlayerHaveBooster(String booster){
-  	return boosters.containsKey(booster);
+  public BoosterPlayer(OfflinePlayer p){
+    this.uuid = p.getUniqueId();
+    playerFile = new File(McBoosters.getInstance().getDataFolder(), File.separator + "playerdata" + File.separator + uuid.toString() + ".yml");
+    boolean exists = playerFile.exists();
+    if(!exists){
+      try{
+        playerFile.createNewFile();
+      } catch(IOException e){
+        e.printStackTrace();
+      }
+    }
+    config = YamlConfiguration.loadConfiguration(playerFile);
+    if(exists){
+      if(config.contains("Boosters")){
+        for(String s : config.getConfigurationSection("Boosters").getKeys(false)){
+          boosterAmounts.put(s.toLowerCase(), config.getInt("Boosters." + s));
+        }
+      }
+    }
   }
 
-  public boolean doesPlayerHaveAnyBoosters(){
-  	return boosters.values().stream().anyMatch(i -> i > 0);
+
+  public Player getPlayer(){
+    return Bukkit.getPlayer(uuid);
   }
 
-  public int getBoosterAmount(String booster){
-  	return boosters.getOrDefault(booster, 0);
+  public boolean isOnline(){
+    return Bukkit.getOfflinePlayer(uuid).isOnline();
   }
 
-  public void giveBoosters(String boosterType, int amount){
-  	setBoosterAmount(boosterType, boosters.containsKey(boosterType) ? boosters.get(boosterType) + amount : amount);
-  }
-  public void setBoosterAmount(String boosterType, int amount){
-  	boosters.put(boosterType, amount);
-  }
-
-  public void decrementBoosterAmount(String boosterType){
-  	if(boosters.containsKey(boosterType)){
-  		int amount = boosters.get(boosterType);
-  		if(amount - 1 <= 0){
-  			boosters.remove(boosterType);
-  		}
-  		else{
-  			boosters.replace(boosterType, amount - 1);
-		  }
-	  }
+  public void giveBoosters(String boosterName, int amount){
+    if(boosterAmounts.containsKey(boosterName)){
+      boosterAmounts.replace(boosterName, boosterAmounts.get(boosterName) + amount);
+    }
+    else{
+      boosterAmounts.put(boosterName, amount);
+    }
+    save();
   }
 
-	private void loadBoosters(){
-  	if(storage.contains("Boosters")){
-  		for(String s : storage.getConfigurationSection("Boosters").getKeys(false)){
-  			boosters.put(s, storage.getInt(s));
-		  }
-	  }
-	}
+  public void setBoosters(String boosterName, int amount){
+    if(boosterAmounts.containsKey(boosterName)){
+      boosterAmounts.replace(boosterName, amount);
+    }
+    else{
+      boosterAmounts.put(boosterName, amount);
+    }
+    save();
+  }
+
+  public boolean hasBoosters(String boosterName){
+    return boosterAmounts.containsKey(boosterName);
+  }
+
+  public int getBoosterAmount(String boosterName){
+    return boosterAmounts.getOrDefault(boosterName, 0);
+  }
+
+  //PRE: Validate that they have enough boosters for decrementing
+  public void decrementBoosterAmount(String boosterName, int amount){
+    int newAmount = boosterAmounts.get(boosterName) - amount;
+    if(newAmount <= 0){
+      boosterAmounts.remove(boosterName);
+    }
+    else{
+      boosterAmounts.replace(boosterName, newAmount);
+    }
+  }
 
   public void save(){
-  	storage.set("Boosters", null);
-  	for(String s : boosters.keySet()){
-  		storage.set("Boosters." + s, boosters.get(s));
-	  }
-	  try{
-		  storage.save(playerFile);
-	  }
-	  catch(IOException e){
-		  e.printStackTrace();
-	  }
+    config.set("Boosters", null);
+    for(String s : boosterAmounts.keySet()){
+      config.set("Boosters." + s, boosterAmounts.get(s));
+    }
+    try{
+      config.save(playerFile);
+    } catch(IOException e){
+      e.printStackTrace();
+    }
   }
 }

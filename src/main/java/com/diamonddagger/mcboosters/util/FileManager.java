@@ -2,7 +2,6 @@ package com.diamonddagger.mcboosters.util;
 
 
 import com.diamonddagger.mcboosters.McBoosters;
-import de.articdive.enum_to_yaml.EnumConfigurationBuilder;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
@@ -308,11 +307,12 @@ public class FileManager {
 
     public enum Files {
         CONFIG("config.yml", "config.yml"),
-        CUSTOM("custom.yml", "localization/custom.yml"),
-        EDIT_DEFAULT_ABILITIES_GUI("editdefaultabilitiesgui.yml", "guis/editdefaultabilitiesgui.yml"),
-        EDIT_LOADOUT_GUI("editloadoutgui.yml", "guis/editloadoutgui.yml"),
-        EDIT_LOADOUT_SELECT_GUI("editloadoutgselectui.yml", "guis/editloadoutselectgui.yml"),
-        ENGLISH_FILE("en.yml", "localization/en.yml");
+        CONFIRM_GUI("confirmgui.yml", "guis/confirmgui.yml"),
+        HOME_GUI("homegui.yml", "guis/homegui.yml"),
+        CUSTOM("custom.yml", "lang/custom.yml"),
+        BOOSTER_FILE("boosters.yml", "boosters.yml"),
+        BOOSTER_BACKUP_FILE("backup.yml", "backup.yml"),
+        ENGLISH_FILE("en.yml", "lang/en.yml");
         private String fileName;
         private String fileLocation;
 

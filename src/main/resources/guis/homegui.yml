@@ -4,9 +4,9 @@ Gui:
     Title: '&bMcBoosters Menu'
     Events:
       #Slot
-      18:
-        - 'OpenFile:guis\booster.yml:MixedBooster'
-      23:
+      13:
+        - 'Confirm:MixedBooster'
+      26:
         #Events bound to slot
         - 'Open:Home2'
     Items:
@@ -15,17 +15,18 @@ Gui:
         Name: '&bMixed Boosters'
         Material: EXPERIENCE_BOTTLE
         Lore:
-          - '&aYou have &e%MixedBoosterAmount% &aMixed Boosters'
-          - '&aThere are currently &e%ActiveMixedBooster%&a/&b%PossibleMixedBooster% &aactive boosters'
-          - '&aThere are currently &e%MixedBoosterInQueue% &ain queue'
-          - '&aNext Booster ends in &e%NextMixedBoosterEndTime%'
-        Slot: 18
+          - '&aYou have &e%mixedboosterAmount% &aMixed Boosters'
+          - '&aThere are currently &e%Activemixedboosters%&a/&b%Possiblemixedboosters%'
+          - '&aactive boosters'
+          - '&aNext Booster ends in &e%NextmixedboosterEndTime%'
+        BoosterDisplay: 'mixedbooster'
+        Slot: 13
       NextButton:
         Name: '&bNext Page'
         Material: ARROW
         Lore:
           - '&eClick this to view more boosters'
-        Slot: 23
+        Slot: 26
     #Fills in every empty slot with this
     FillerItem:
       Material: GRAY_STAINED_GLASS_PANE

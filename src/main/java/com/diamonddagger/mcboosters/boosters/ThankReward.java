@@ -5,11 +5,10 @@ import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.configuration.file.FileConfiguration;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ThankReward{
-
-	private static final String THANK_KEY = "Booster.ThankReward";
 
 	@Getter
 	@Setter
@@ -25,13 +24,19 @@ public class ThankReward{
 
 	@Getter
 	@Setter
-	private List<String> thankerCommands;
+	private Parser jobsMoneyReward;
 
 	@Getter
 	@Setter
-	private List<String> ownerCommands;
+	private List<String> thankerCommands = new ArrayList<>();
 
-	public ThankReward(FileConfiguration configuration){
+	@Getter
+	@Setter
+	private List<String> ownerCommands = new ArrayList<>();
+
+	public ThankReward(FileConfiguration configuration, String booster){
+		final String THANK_KEY = booster + ".ThankingRewards";
+
 		if(configuration.contains(THANK_KEY)){
 			if(configuration.contains(THANK_KEY + ".McRPGExp")){
 				mcrpgExpReward = new Parser(configuration.getString(THANK_KEY + ".McRPGExp"));
@@ -41,6 +46,9 @@ public class ThankReward{
 			}
 			if(configuration.contains(THANK_KEY + ".McMMOExp")){
 				mcmmoExpReward = new Parser(configuration.getString(THANK_KEY + ".McMMOExp"));
+			}
+			if(configuration.contains(THANK_KEY + ".JobsMoney")){
+				jobsMoneyReward = new Parser(configuration.getString(THANK_KEY + ".JobsMoney"));
 			}
 			if(configuration.contains(THANK_KEY + ".ThankerCommands")){
 				thankerCommands = configuration.getStringList(THANK_KEY + ".ThankerCommands");

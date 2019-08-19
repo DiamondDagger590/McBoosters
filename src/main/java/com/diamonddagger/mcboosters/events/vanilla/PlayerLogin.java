@@ -17,5 +17,6 @@ public class PlayerLogin implements Listener{
 		else{
 			playerManager.initializePlayer(e.getPlayer());
 		}
+		McBoosters.getInstance().getBoosterManager().thankAllBoosters(e.getPlayer());
 	}
 }
