@@ -2,6 +2,7 @@ package com.diamonddagger.mcboosters;
 
 import com.diamonddagger.mcboosters.announcer.Announcer;
 import com.diamonddagger.mcboosters.boosters.BoosterManager;
+import com.diamonddagger.mcboosters.commands.CommandPrompt;
 import com.diamonddagger.mcboosters.commands.McBoosterStub;
 import com.diamonddagger.mcboosters.discord.DiscordManager;
 import com.diamonddagger.mcboosters.events.vanilla.*;
@@ -51,6 +52,7 @@ public final class McBoosters extends JavaPlugin {
     Bukkit.getPluginManager().registerEvents(new PlayerLogin(), this);
     Bukkit.getPluginManager().registerEvents(new PlayerLogout(), this);
     getCommand("mcbooster").setExecutor(new McBoosterStub());
+    Bukkit.getServer().getPluginCommand("mcbooster").setTabCompleter(new CommandPrompt());
   }
 
   @Override
@@ -58,8 +60,13 @@ public final class McBoosters extends JavaPlugin {
     boosterManager.backup();
   }
 
+  @Override
+  public FileConfiguration getConfig(){
+    return fileManager.getFile(FileManager.Files.CONFIG);
+  }
+
   public FileConfiguration getLangFile() {
-    return FileManager.Files.fromString(getConfig().getString("Configuration.LangFile")).getFile();
+    return FileManager.Files.fromString(fileManager.getFile(FileManager.Files.CONFIG).getString("Configuration.LangFile")).getFile();
   }
 
   public String getPluginPrefix(){

@@ -9,9 +9,25 @@ Messages:
   Admin:
     BoostersGiven: '&aYou gave &e%Player% %Amount% %BoosterType%.'
     BoostersReceived: '&aYou were given &e%Amount% %BoosterType%.'
+    Reload: '&aYou have reloaded all files for this plugin'
+  Help:
+    - '&e--------------------------'
+    - '&7[&6McBooster Command &7]&3 /mcbooster'
+    - '&3    -Opens main McBooster gui'
+    - '&7[&6McBooster Command &7]&3 /mcbooster reload'
+    - '&3    -Reloads plugin and related files'
+    - '&7[&6Booster Give Command &7]&3 /mcbooster admin give %Player% %Booster% %Amount%'
+    - '&3    -Gives player boosters'
+    - '&7[&6McAdmin Command &7]&3 /mcbooster admin cancel %Booster%'
+    - '&3    -Cancels all boosters of the provided type'
+    - '&e--------------------------'
   Boosters:
     Ended: '&e%Player%s %BoosterType% &chas ended.'
     Started: '&e%Player% &ahas started a &e%BoosterType%'
+    Cancelled: '&cAll &e%BoosterType% &chave been cancelled'
+    NoneActive: '&cThere are no boosters of that type that are active'
+    Thank: '&aYou have thanked %Owner%s %BoosterType%'
+    Thanked: '&aYou were thanked by %Thanker%'
   DiscordMessage:
     Started: '@here %Player% has started a %BoosterType%! Log in to thank them!'
     Ended: '%Player%s %BoosterType% has expired! Log in to activate another one!'

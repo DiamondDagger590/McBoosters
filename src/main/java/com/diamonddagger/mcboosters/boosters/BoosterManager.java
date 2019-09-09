@@ -3,6 +3,7 @@ package com.diamonddagger.mcboosters.boosters;
 import com.diamonddagger.mcboosters.McBoosters;
 import com.diamonddagger.mcboosters.players.BoosterPlayer;
 import com.diamonddagger.mcboosters.util.FileManager;
+import com.diamonddagger.mcboosters.util.Methods;
 import com.diamonddagger.mcboosters.util.parser.Parser;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -15,8 +16,7 @@ import java.util.stream.Collectors;
 
 public class BoosterManager {
 
-  private final Calendar cal = Calendar.getInstance();
-  private Map<String, List<Booster>> activeBoosters = new HashMap<>();
+  private HashMap<String, List<Booster>> activeBoosters = new HashMap<>();
   private Map<String, BoosterInfo> boosterInfoMap = new HashMap<>();
   private BukkitTask validateTask;
 
@@ -31,7 +31,6 @@ public class BoosterManager {
     for(String s : boosterConfig.getConfigurationSection("").getKeys(false)){
       boosterInfoMap.put(s.toLowerCase(), new BoosterInfo(boosterConfig, s));
     }
-
     //Backup boosters
     FileConfiguration boosterBackup = plugin.getFileManager().getFile(FileManager.Files.BOOSTER_BACKUP_FILE);
     if(boosterBackup.contains("Boosters")){
@@ -39,6 +38,7 @@ public class BoosterManager {
         String key = "Boosters." + s.toLowerCase() + ".";
         String boosterName = boosterBackup.getString(key + "ID");
         if(boosterBackup.getInt(key + "RemainingDuration") <= 0){
+          boosterBackup.set("Boosters." + s, null);
           continue;
         }
         Booster booster = BoosterFactory.getBooster(boosterConfig, boosterBackup, key, boosterName);
@@ -51,6 +51,7 @@ public class BoosterManager {
           activeBoosters.put(boosterName, list);
         }
       }
+      plugin.getFileManager().saveFile(FileManager.Files.BOOSTER_BACKUP_FILE);
     }
   }
 
@@ -64,13 +65,13 @@ public class BoosterManager {
         public void run(){
           backup();
         }
-      }.runTaskTimer(plugin, 180, 5 * 60 * 20);
+      }.runTaskTimer(plugin, 180, 1 * 60 * 20);
     }
   }
 
   public void backup(){
     McBoosters plugin = McBoosters.getInstance();
-    Map<String, List<Booster>> clone = (HashMap<String, List<Booster>>) ((HashMap) activeBoosters).clone();
+    Map<String, List<Booster>> clone = (HashMap<String, List<Booster>>) activeBoosters.clone();
     FileConfiguration backup = plugin.getFileManager().getFile(FileManager.Files.BOOSTER_BACKUP_FILE);
     backup.set("Boosters", null);
     //iter through all boosterNames
@@ -80,20 +81,26 @@ public class BoosterManager {
         activeBoosters.remove(s);
       }
       else{
-        List<Booster> newList = clone.get(s);
+        List<Booster> newList = (List<Booster>) ((ArrayList) clone.get(s)).clone();
+        List<Integer> toRemove = new ArrayList<>();
+        if(newList == activeBoosters.get(s)){
+          Bukkit.broadcastMessage("why tf");
+        }
         //iterate through all the boosters
-        for(Booster booster : newList){
+        for(int i = 0; i < newList.size(); i++){
+          Booster booster = activeBoosters.get(s).get(i);
           //cancel boosters
+          Calendar cal = Calendar.getInstance();
           if(booster.getEndTime() <= cal.getTimeInMillis()){
-            activeBoosters.get(s).remove(booster);
+            toRemove.add(i);
             plugin.getAnnouncer().announceBoosterEnd(booster);
           }
         }
+        for(int i = toRemove.size() - 1; i >= 0; i--){
+          activeBoosters.get(s).remove(i);
+        }
         if(newList.isEmpty()){
           activeBoosters.remove(s);
-        }
-        else{
-          activeBoosters.replace(s, newList);
         }
       }
       if(activeBoosters.containsKey(s)){
@@ -103,13 +110,22 @@ public class BoosterManager {
           backup.set(key + "ID", s);
           backup.set(key + "Owner", booster.getOwner().toString());
           backup.set(key + "Thanked", booster.getThankedPlayers().stream().map(UUID::toString).collect(Collectors.toList()));
-          long remainingMilis = booster.getEndTime() - cal.getTimeInMillis();
-          backup.set(key + "RemainingDuration", remainingMilis / 1000);
+          Calendar cal = Calendar.getInstance();
+          long remainingMillis = booster.getEndTime() - cal.getTimeInMillis();
+          backup.set(key + "RemainingDuration", remainingMillis / 1000);
           i++;
         }
       }
     }
     plugin.getFileManager().saveFile(FileManager.Files.BOOSTER_BACKUP_FILE);
+  }
+
+  public Set<String> getAllBoosterTypes(){
+    return boosterInfoMap.keySet();
+  }
+
+  public Set<String> getAllActiveBoosterTypes(){
+    return activeBoosters.keySet();
   }
 
   public long getNextEndingBooster(String boosterType){
@@ -131,10 +147,21 @@ public class BoosterManager {
     return boosterInfoMap.containsKey(type.toLowerCase());
   }
 
+  public void cancelBooster(String boosterType){
+    activeBoosters.remove(boosterType);
+    for(Player p : Bukkit.getOnlinePlayers()){
+      p.sendMessage(Methods.color(McBoosters.getInstance().getPluginPrefix() + McBoosters.getInstance().getLangFile().getString("Messages.Boosters.Cancelled")
+      .replace("%BoosterType%", boosterType)));
+    }
+  }
+
   public void thankAllBoosters(Player p){
     for(String s : activeBoosters.keySet()){
+      Bukkit.broadcastMessage("1");
       for(Booster booster : activeBoosters.get(s)){
+        Bukkit.broadcastMessage("2");
         if(!p.getUniqueId().equals(booster.getOwner()) && !booster.hasPlayerThanked(p)){
+          Bukkit.broadcastMessage("3");
           booster.thank(p);
         }
       }

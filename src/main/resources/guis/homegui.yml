@@ -31,3 +31,35 @@ Gui:
     FillerItem:
       Material: GRAY_STAINED_GLASS_PANE
       Name: ' '
+  Home2:
+    Size: 27
+    Title: '&bMcBoosters Menu'
+    Events:
+      #Slot
+      13:
+        - 'Confirm:KeyBooster'
+      28:
+        #Events bound to slot
+        - 'Open:Home'
+    Items:
+      #This it an identifier and can be anything
+      BoosterButton:
+        Name: '&bKey Boosters'
+        Material: TRIPWIRE_HOOK
+        Lore:
+          - '&aYou have &e%keyboosterAmount% &aKey Boosters'
+          - '&aThere are currently &e%Activekeyboosters%&a/&b%Possiblekeyboosters%'
+          - '&aactive boosters'
+          - '&aNext Booster ends in &e%NextkeyboosterEndTime%'
+        BoosterDisplay: 'keybooster'
+        Slot: 13
+      NextButton:
+        Name: '&bLast Page'
+        Material: ARROW
+        Lore:
+          - '&eClick this to view more boosters'
+        Slot: 18
+    #Fills in every empty slot with this
+    FillerItem:
+      Material: GRAY_STAINED_GLASS_PANE
+      Name: ' '

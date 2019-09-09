@@ -2,8 +2,8 @@
 mixedbooster:
   DiscordSupport:
     Enabled: true
-    StartChannel: '410995386136920064'
-    EndChannel: '410995386136920064'
+    StartChannel: '613162865716625408'
+    EndChannel: '613162865716625408'
   #The name to be used in GUIs, messages, etc
   DisplayName: '&aMixed Booster'
   #What types of boosts should this plugin provide
@@ -20,6 +20,25 @@ mixedbooster:
     VanillaExp: '200'
     McRPGExp: '1000 + power_level/10'
     JobsMoney: '10 * highest_job'
+  #The max amount of boosters of this type that can be active
+  MaxAmount: 3
+  #How long should the booster go in seconds
+  Duration: 3600
+#Name is used internally. Changing this after distributing boosters will mess up the plugin
+keybooster:
+  DiscordSupport:
+    Enabled: true
+    StartChannel: '613162865716625408'
+    EndChannel: '613162865716625408'
+  #The name to be used in GUIs, messages, etc
+  DisplayName: '&aKey Booster'
+  #What types of boosts should this plugin provide
+  #When players thank the booster, what should their rewards be
+  ThankingRewards:
+    ThankerCommands:
+      - 'cc give v Verdux 5 %Player%'
+    OwnerCommands:
+      - 'cc give v Verdux 5 %Player%'
   #The max amount of boosters of this type that can be active
   MaxAmount: 3
   #How long should the booster go in seconds

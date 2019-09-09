@@ -29,7 +29,7 @@ public class FileManager {
     private HashMap<String, String> autoGenerateFiles = new HashMap<>();
     private HashMap<Files, FileConfiguration> configurations = new HashMap<>();
 
-    private static FileManager instance = new FileManager();
+    private static FileManager instance;
 
     public static FileManager getInstance() {
         return instance;
@@ -41,6 +41,7 @@ public class FileManager {
      * @param plugin The plugin this is getting loading for.
      */
     public FileManager setup(Plugin plugin) {
+        instance = this;
         //Auto gen some configs
        /* EnumConfigurationBuilder config = new EnumConfigurationBuilder(new File(McRPG.getInstance().getDataFolder() + File.separator + "config.yml"), ConfigEnum.class);
         EnumConfigurationBuilder enConfig = new EnumConfigurationBuilder(new File(McRPG.getInstance().getDataFolder() + File.separator + "localization" + File.separator + "en.yml"), LangEnum.class);
@@ -356,7 +357,7 @@ public class FileManager {
 
         public static Files fromString(String file) {
             for (Files f : Files.values()) {
-                if (f.getFileName().replaceAll(".yml", "").equalsIgnoreCase(file)) {
+                if (f.getFileName().replaceAll(".yml", "").toLowerCase().contains(file.toLowerCase())) {
                     return f;
                 }
             }

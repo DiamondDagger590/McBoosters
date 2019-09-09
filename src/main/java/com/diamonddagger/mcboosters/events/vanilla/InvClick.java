@@ -105,9 +105,11 @@ public class InvClick implements Listener {
           }
         }
         else if(event.equalsIgnoreCase("Open")){
-          GUITracker.stopTrackingPlayer(p);
-          p.closeInventory();
-          p.sendMessage(Methods.color("&cThis has yet to be implemented"));
+          String name = events[1];
+          GUI gui = new FileGUI(name, currentGUI.getGui().getConfig(), mp);
+          currentGUI.setClearData(false);
+          p.openInventory(gui.getGui().getInv());
+          GUITracker.replacePlayersGUI(mp, gui);
           return;
         }
         else if(event.equalsIgnoreCase("OpenFile")){

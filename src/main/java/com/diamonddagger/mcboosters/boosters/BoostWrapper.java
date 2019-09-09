@@ -52,7 +52,8 @@ public class BoostWrapper {
       jobsMoneyBoost = boosterFile.getDouble(JOBS_MONEY_KEY);
     }
     if(vanillaBoosts.isEmpty() && mcRPGBoosts.isEmpty() && mcmmoBoosts.isEmpty() && jobsExpBoost.isEmpty() && !boosterFile.contains(BASE_KEY + "ThankCommands")){
-      Bukkit.getLogger().log(Level.WARNING, Methods.color("&cBooster named: " + boosterFile.getString("Booster.Name") + " has no valid boosts associated with it. Please either remove this booster, fix invalid criteria or seek support on Discord"));
+      Bukkit.getLogger().log(Level.WARNING, Methods.color("&cBooster named: " + boosterFile.getString(boosterName + ".DisplayName") + " has no valid boosts associated with it. This might be due" +
+              "to it being a command reward based booster. If this is not the case, please correct the booster or seek assistance on discord."));
     }
   }
 

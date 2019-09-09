@@ -1,6 +1,7 @@
 package com.diamonddagger.mcboosters.boosters;
 
 import com.diamonddagger.mcboosters.McBoosters;
+import com.diamonddagger.mcboosters.util.Methods;
 import com.diamonddagger.mcboosters.util.parser.Parser;
 import lombok.Getter;
 import org.bukkit.Bukkit;
@@ -44,8 +45,9 @@ public class BaseBooster implements Booster {
     this.boosterInfo = boosterInfo;
     this.boosterOwner = UUID.fromString(backupFile.getString(key + ".Owner"));
     Calendar cal = Calendar.getInstance();
-    cal.add(Calendar.SECOND, backupFile.getInt(key + ".RemainingDuration"));
-    this.endTime = cal.getTimeInMillis();
+    int remainingDuration = backupFile.getInt(key + ".RemainingDuration");
+    cal.add(Calendar.SECOND, remainingDuration);
+    this.endTime = remainingDuration > 0 ? cal.getTimeInMillis() : 0L;
     this.thankedPlayers = backupFile.getStringList(key + ".ThankedPlayers").stream().map(UUID::fromString).collect(Collectors.toSet());
   }
 
@@ -56,6 +58,7 @@ public class BaseBooster implements Booster {
   @Override
   public void thank(Player thanker){
     OfflinePlayer owner = Bukkit.getOfflinePlayer(boosterOwner);
+    thankedPlayers.add(thanker.getUniqueId());
     int vanillaExp = (int) boosterInfo.getThankReward().getVanillaExpReward().getValue();
     int mcrpgExp = 0;
     if(!boosterInfo.getThankReward().getThankerCommands().isEmpty()){
@@ -76,6 +79,8 @@ public class BaseBooster implements Booster {
       }
     }
     thanker.giveExp(vanillaExp);
+    thanker.sendMessage(Methods.color(McBoosters.getInstance().getPluginPrefix() + McBoosters.getInstance().getLangFile().getString("Messages.Boosters.Thank")
+    .replace("%Owner%", owner.getName()).replace("%BoosterType%", this.getDisplayName())));
     if(owner.isOnline() && McBoosters.getInstance().isMcrpgEnabled()){
       Player onlineOwner = (Player) owner;
       onlineOwner.giveExp(vanillaExp);
@@ -93,6 +98,8 @@ public class BaseBooster implements Booster {
           Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("%Player%", onlineOwner.getName()));
         }
       }
+      onlineOwner.sendMessage(Methods.color(McBoosters.getInstance().getPluginPrefix() + McBoosters.getInstance().getLangFile().getString("Messages.Boosters.Thanked")
+      .replace("%Thanker%", thanker.getDisplayName())));
     }
     else{
       File playerStorageFolder = new File(McBoosters.getInstance().getDataFolder(), File.separator + "playerdata");

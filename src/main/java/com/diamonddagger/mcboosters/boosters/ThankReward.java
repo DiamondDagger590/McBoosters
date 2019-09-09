@@ -12,19 +12,19 @@ public class ThankReward{
 
 	@Getter
 	@Setter
-	private Parser vanillaExpReward;
+	private Parser vanillaExpReward = new Parser("0");
 
 	@Getter
 	@Setter
-	private Parser mcmmoExpReward;
+	private Parser mcmmoExpReward = new Parser("0");
 
 	@Getter
 	@Setter
-	private Parser mcrpgExpReward;
+	private Parser mcrpgExpReward = new Parser("0");
 
 	@Getter
 	@Setter
-	private Parser jobsMoneyReward;
+	private Parser jobsMoneyReward = new Parser("0");
 
 	@Getter
 	@Setter
