@@ -38,7 +38,7 @@ Gui:
       #Slot
       13:
         - 'Confirm:KeyBooster'
-      28:
+      18:
         #Events bound to slot
         - 'Open:Home'
     Items:
@@ -53,7 +53,7 @@ Gui:
           - '&aNext Booster ends in &e%NextkeyboosterEndTime%'
         BoosterDisplay: 'keybooster'
         Slot: 13
-      NextButton:
+      BackButton:
         Name: '&bLast Page'
         Material: ARROW
         Lore:

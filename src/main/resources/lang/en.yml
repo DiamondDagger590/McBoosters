@@ -29,5 +29,5 @@ Messages:
     Thank: '&aYou have thanked %Owner%s %BoosterType%'
     Thanked: '&aYou were thanked by %Thanker%'
   DiscordMessage:
-    Started: '@here %Player% has started a %BoosterType%! Log in to thank them!'
-    Ended: '%Player%s %BoosterType% has expired! Log in to activate another one!'
+    Started: '@here %Amount% %BoosterType% have been activated by %Players%'
+    Ended: '@here %Amount% %BoosterType% that were activated by %Players% have ended'

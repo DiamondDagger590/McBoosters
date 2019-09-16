@@ -3,6 +3,9 @@ package com.diamonddagger.mcboosters.boosters;
 import com.diamonddagger.mcboosters.McBoosters;
 import com.diamonddagger.mcboosters.util.Methods;
 import com.diamonddagger.mcboosters.util.parser.Parser;
+import com.gamingmesh.jobs.Jobs;
+import com.gamingmesh.jobs.container.JobProgression;
+import com.gamingmesh.jobs.economy.BufferedPayment;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -48,7 +51,7 @@ public class BaseBooster implements Booster {
     int remainingDuration = backupFile.getInt(key + ".RemainingDuration");
     cal.add(Calendar.SECOND, remainingDuration);
     this.endTime = remainingDuration > 0 ? cal.getTimeInMillis() : 0L;
-    this.thankedPlayers = backupFile.getStringList(key + ".ThankedPlayers").stream().map(UUID::fromString).collect(Collectors.toSet());
+    this.thankedPlayers = backupFile.getStringList(key + ".Thanked").stream().map(UUID::fromString).collect(Collectors.toSet());
   }
 
   public String getDisplayName(){
@@ -61,6 +64,7 @@ public class BaseBooster implements Booster {
     thankedPlayers.add(thanker.getUniqueId());
     int vanillaExp = (int) boosterInfo.getThankReward().getVanillaExpReward().getValue();
     int mcrpgExp = 0;
+    double jobsMoney = 0;
     if(!boosterInfo.getThankReward().getThankerCommands().isEmpty()){
       for(String command : boosterInfo.getThankReward().getThankerCommands()){
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("%Player%", thanker.getName()));
@@ -76,6 +80,18 @@ public class BaseBooster implements Booster {
         mp.saveData();
       } catch(McRPGPlayerNotFoundException e){
         return;
+      }
+    }
+    if(McBoosters.getInstance().isJobsEnabled()){
+      Parser p = boosterInfo.getThankReward().getJobsMoneyReward();
+      int highestJob = 0;
+      for(JobProgression progression : Jobs.getPlayerManager().getJobsPlayer(thanker).getJobProgression()){
+        highestJob = Math.max(progression.getLevel(), highestJob);
+      }
+      p.setVariable("highest_job", highestJob);
+      jobsMoney = p.getValue();
+      if(jobsMoney > 0){
+        Jobs.getEconomy().pay(new BufferedPayment(thanker, p.getValue(), 0, 0));
       }
     }
     thanker.giveExp(vanillaExp);
@@ -123,10 +139,18 @@ public class BaseBooster implements Booster {
       }
       if(mcrpgExp > 0){
         if(storage.contains("CachedRewards.McRPGExp")){
-          storage.set("CachedRewards.McRPGExp", vanillaExp + storage.getInt("CachedRewards.McRPGExp"));
+          storage.set("CachedRewards.McRPGExp", mcrpgExp + storage.getInt("CachedRewards.McRPGExp"));
         }
         else{
           storage.set("CachedRewards.McRPGExp", mcrpgExp);
+        }
+      }
+      if(jobsMoney > 0){
+        if(storage.contains("CachedRewards.JobsMoney")){
+          storage.set("CachedRewards.JobsMoney", jobsMoney + storage.getInt("CachedRewards.JobsMoney"));
+        }
+        else{
+          storage.set("CachedRewards.JobsMoney", jobsMoney);
         }
       }
       if(!boosterInfo.getThankReward().getOwnerCommands().isEmpty()){
@@ -138,7 +162,7 @@ public class BaseBooster implements Booster {
         }
         for(String command : boosterInfo.getThankReward().getOwnerCommands()){
           startingIter++;
-          storage.set("CachedCommands." + startingIter, command);
+          storage.set("CachedCommands." + Integer.toString(startingIter), command);
         }
       }
       try{

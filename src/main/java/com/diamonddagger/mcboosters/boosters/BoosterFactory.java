@@ -7,15 +7,14 @@ import java.util.UUID;
 
 class BoosterFactory {
 
-  static Booster getBooster(FileConfiguration config, UUID owner, String boosterName){
-    BoosterInfo boosterInfo = new BoosterInfo(config, boosterName);
+  static Booster getBooster(UUID owner, BoosterInfo boosterInfo){
     Calendar calendar = Calendar.getInstance();
     calendar.add(Calendar.SECOND, boosterInfo.getDuration());
     long endTime = calendar.getTimeInMillis();
     return new BaseBooster(owner, endTime, boosterInfo);
   }
 
-  static Booster getBooster(FileConfiguration boosterFile, FileConfiguration backupFile, String key, String boosterName){
-    return new BaseBooster(backupFile, key, new BoosterInfo(boosterFile, boosterName));
+  static Booster getBooster(FileConfiguration backupFile, String key, BoosterInfo boosterInfo){
+    return new BaseBooster(backupFile, key, boosterInfo);
   }
 }

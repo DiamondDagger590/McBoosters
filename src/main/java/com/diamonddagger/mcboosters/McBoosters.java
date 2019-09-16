@@ -8,6 +8,8 @@ import com.diamonddagger.mcboosters.discord.DiscordManager;
 import com.diamonddagger.mcboosters.events.vanilla.*;
 import com.diamonddagger.mcboosters.players.PlayerManager;
 import com.diamonddagger.mcboosters.util.FileManager;
+import com.gamingmesh.jobs.Jobs;
+import com.gamingmesh.jobs.economy.BufferedEconomy;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -17,6 +19,7 @@ public final class McBoosters extends JavaPlugin {
 
   @Getter
   private static McBoosters instance;
+  private BufferedEconomy eco;
   @Getter
   private FileManager fileManager = new FileManager();
   @Getter
@@ -29,6 +32,8 @@ public final class McBoosters extends JavaPlugin {
   private Announcer announcer;
   @Getter
   private boolean mcrpgEnabled = false;
+  @Getter
+  private boolean jobsEnabled = false;
 
 
 
@@ -40,10 +45,15 @@ public final class McBoosters extends JavaPlugin {
     discordManager = new DiscordManager();
     playerManager = new PlayerManager();
     announcer = new Announcer();
-
     if(Bukkit.getPluginManager().isPluginEnabled("McRPG")){
       mcrpgEnabled = true;
       Bukkit.getPluginManager().registerEvents(new McRPGExpEvent(), this);
+    }
+    if(Bukkit.getPluginManager().isPluginEnabled("Jobs")){
+      System.out.println("Enabling Jobs Hooks");
+      jobsEnabled = true;
+      Bukkit.getPluginManager().registerEvents(new JobsEvents(), this);
+      eco = ((Jobs)Bukkit.getPluginManager().getPlugin("Jobs")).getEconomy();
     }
     Bukkit.getPluginManager().registerEvents(new JobsEvents(), this);
     Bukkit.getPluginManager().registerEvents(new InvClick(), this);
@@ -55,9 +65,18 @@ public final class McBoosters extends JavaPlugin {
     Bukkit.getServer().getPluginCommand("mcbooster").setTabCompleter(new CommandPrompt());
   }
 
+  public BufferedEconomy getEco(){
+    if(eco == null && jobsEnabled){
+      eco = ((Jobs)Bukkit.getPluginManager().getPlugin("Jobs")).getEconomy();
+      return eco;
+    }
+    return null;
+  }
+
   @Override
   public void onDisable(){
     boosterManager.backup();
+    announcer.forceAnnounce();
   }
 
   @Override

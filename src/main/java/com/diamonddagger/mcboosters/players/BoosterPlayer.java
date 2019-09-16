@@ -1,12 +1,17 @@
 package com.diamonddagger.mcboosters.players;
 
 import com.diamonddagger.mcboosters.McBoosters;
+import com.gamingmesh.jobs.economy.BufferedPayment;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
+import us.eunoians.mcrpg.api.exceptions.McRPGPlayerNotFoundException;
+import us.eunoians.mcrpg.players.McRPGPlayer;
+import us.eunoians.mcrpg.players.PlayerManager;
 
 import java.io.File;
 import java.io.IOException;
@@ -44,22 +49,34 @@ public class BoosterPlayer {
       }
       //Deal with cached rewards
       if(config.contains("CachedRewards")){
-        if(config.contains("CachedRewards.McRPGExp")){
-          //TODO
+        if(McBoosters.getInstance().isMcrpgEnabled() && config.contains("CachedRewards.McRPGExp")){
+          new BukkitRunnable(){
+            @Override
+            public void run(){
+              try{
+                McRPGPlayer player = PlayerManager.getPlayer(uuid);
+                player.giveRedeemableExp(config.getInt("CachedRewards.McRPGExp"));
+                player.saveData();
+                config.set("CachedRewards.McRPGExp", null);
+              } catch(McRPGPlayerNotFoundException e){
+                e.printStackTrace();
+              }
+            }
+          }.runTaskLater(McBoosters.getInstance(), 20 * 20);
         }
         if(config.contains("CachedRewards.VanillaExp")){
           p.giveExp(config.getInt("CachedRewards.VanillaExp"));
-          //TODO message
-          config.set("CahcedRewards.VanillaExp", null);
+          config.set("CachedRewards.VanillaExp", null);
         }
-        if(config.contains("CachedRewards.JobsMoney")){
-          //TODO
+        if(McBoosters.getInstance().isJobsEnabled() && config.contains("CachedRewards.JobsMoney")){
+          McBoosters.getInstance().getEco().pay(new BufferedPayment(p, config.getDouble("CachedRewards.JobsMoney"), 0, 0));
+          config.set("CachedRewards.JobsMoney", null);
         }
       }
       if(config.contains("CachedCommands")){
         for(String s : config.getConfigurationSection("CachedCommands").getKeys(false)){
-          String key = "CachedCommands." + s + ".";
-          Bukkit.dispatchCommand(Bukkit.getConsoleSender(), config.getString(key + "Command").replace("%Player%", p.getName()));
+          String key = "CachedCommands." + s;
+          Bukkit.dispatchCommand(Bukkit.getConsoleSender(), config.getString(key).replace("%Player%", p.getName()));
         }
         config.set("CachedCommands", null);
       }

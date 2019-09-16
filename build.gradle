@@ -24,6 +24,7 @@ repositories {
     maven { url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
     maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
     maven { url 'https://nexus.articdive.de/repository/maven-public/' }
+    maven { url 'http://nexus.hc.to/content/repositories/pub_releases' }
 }
 
 dependencies {
@@ -32,7 +33,7 @@ dependencies {
     compileOnly 'com.discordsrv:discordsrv:1.16.6'
     compileOnly files('libs/McRPG-1.1.1-BETA.jar')
     compileOnly files('libs/Jobs4.13.0.jar')
-
+    compileOnly 'net.milkbowl.vault:VaultAPI:1.7'
 }
 
 /*processResources {

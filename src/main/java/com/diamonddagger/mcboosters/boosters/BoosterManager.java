@@ -25,6 +25,13 @@ public class BoosterManager {
     startValidateTask(McBoosters.getInstance());
   }
 
+  public void reload(McBoosters plugin){
+    boosterInfoMap.clear();
+    FileConfiguration boosterConfig = plugin.getFileManager().getFile(FileManager.Files.BOOSTER_FILE);
+    for(String s : boosterConfig.getConfigurationSection("").getKeys(false)){
+      boosterInfoMap.put(s.toLowerCase(), new BoosterInfo(boosterConfig, s));
+    }
+  }
   private void setup(McBoosters plugin){
     //Load in booster data
     FileConfiguration boosterConfig = plugin.getFileManager().getFile(FileManager.Files.BOOSTER_FILE);
@@ -35,20 +42,22 @@ public class BoosterManager {
     FileConfiguration boosterBackup = plugin.getFileManager().getFile(FileManager.Files.BOOSTER_BACKUP_FILE);
     if(boosterBackup.contains("Boosters")){
       for(String s : boosterBackup.getConfigurationSection("Boosters").getKeys(false)){
-        String key = "Boosters." + s.toLowerCase() + ".";
-        String boosterName = boosterBackup.getString(key + "ID");
-        if(boosterBackup.getInt(key + "RemainingDuration") <= 0){
-          boosterBackup.set("Boosters." + s, null);
-          continue;
-        }
-        Booster booster = BoosterFactory.getBooster(boosterConfig, boosterBackup, key, boosterName);
-        if(activeBoosters.containsKey(boosterName)){
-          activeBoosters.get(boosterName).add(booster);
-        }
-        else{
-          ArrayList<Booster> list = new ArrayList<>();
-          list.add(booster);
-          activeBoosters.put(boosterName, list);
+        for(String i : boosterBackup.getConfigurationSection("Boosters." + s).getKeys(false)){
+          String key = "Boosters." + s + "." + i + ".";
+          String boosterName = boosterBackup.getString(key + "ID");
+          if(boosterBackup.getInt(key + "RemainingDuration") <= 0){
+            boosterBackup.set("Boosters." + s, null);
+            continue;
+          }
+          Booster booster = BoosterFactory.getBooster(boosterBackup, key, boosterInfoMap.get(boosterName));
+          if(activeBoosters.containsKey(boosterName)){
+            activeBoosters.get(boosterName).add(booster);
+          }
+          else{
+            ArrayList<Booster> list = new ArrayList<>();
+            list.add(booster);
+            activeBoosters.put(boosterName, list);
+          }
         }
       }
       plugin.getFileManager().saveFile(FileManager.Files.BOOSTER_BACKUP_FILE);
@@ -84,7 +93,7 @@ public class BoosterManager {
         List<Booster> newList = (List<Booster>) ((ArrayList) clone.get(s)).clone();
         List<Integer> toRemove = new ArrayList<>();
         if(newList == activeBoosters.get(s)){
-          Bukkit.broadcastMessage("why tf");
+
         }
         //iterate through all the boosters
         for(int i = 0; i < newList.size(); i++){
@@ -93,20 +102,21 @@ public class BoosterManager {
           Calendar cal = Calendar.getInstance();
           if(booster.getEndTime() <= cal.getTimeInMillis()){
             toRemove.add(i);
-            plugin.getAnnouncer().announceBoosterEnd(booster);
+            plugin.getAnnouncer().announceBoosterEnd(booster, s, true);
           }
         }
         for(int i = toRemove.size() - 1; i >= 0; i--){
-          activeBoosters.get(s).remove(i);
+          int x = toRemove.get(i);
+          activeBoosters.get(s).remove(x);
         }
-        if(newList.isEmpty()){
+        if(activeBoosters.get(s).isEmpty()){
           activeBoosters.remove(s);
         }
       }
       if(activeBoosters.containsKey(s)){
         int i = 1;
         for(Booster booster : activeBoosters.get(s)){
-          String key = "Boosters." + i + ".";
+          String key = "Boosters." + s + "." + i + ".";
           backup.set(key + "ID", s);
           backup.set(key + "Owner", booster.getOwner().toString());
           backup.set(key + "Thanked", booster.getThankedPlayers().stream().map(UUID::toString).collect(Collectors.toList()));
@@ -148,20 +158,21 @@ public class BoosterManager {
   }
 
   public void cancelBooster(String boosterType){
+    for(Booster booster : activeBoosters.get(boosterType)){
+      McBoosters.getInstance().getAnnouncer().announceBoosterEnd(booster, boosterType, false);
+    }
     activeBoosters.remove(boosterType);
     for(Player p : Bukkit.getOnlinePlayers()){
       p.sendMessage(Methods.color(McBoosters.getInstance().getPluginPrefix() + McBoosters.getInstance().getLangFile().getString("Messages.Boosters.Cancelled")
       .replace("%BoosterType%", boosterType)));
     }
+
   }
 
   public void thankAllBoosters(Player p){
     for(String s : activeBoosters.keySet()){
-      Bukkit.broadcastMessage("1");
       for(Booster booster : activeBoosters.get(s)){
-        Bukkit.broadcastMessage("2");
         if(!p.getUniqueId().equals(booster.getOwner()) && !booster.hasPlayerThanked(p)){
-          Bukkit.broadcastMessage("3");
           booster.thank(p);
         }
       }
@@ -178,7 +189,7 @@ public class BoosterManager {
 
   //PRE: validate that the user has enough boosters to activate one
   public void activateBooster(BoosterPlayer boosterPlayer, String boosterName){
-    Booster booster = BoosterFactory.getBooster(McBoosters.getInstance().getFileManager().getFile(FileManager.Files.BOOSTER_FILE), boosterPlayer.getUuid(), boosterName);
+    Booster booster = BoosterFactory.getBooster(boosterPlayer.getUuid(), boosterInfoMap.get(boosterName));
     if(activeBoosters.containsKey(boosterName)){
       activeBoosters.get(boosterName).add(booster);
     }
@@ -187,7 +198,7 @@ public class BoosterManager {
       list.add(booster);
       activeBoosters.put(boosterName, list);
     }
-    McBoosters.getInstance().getAnnouncer().announceBoosterStart(booster);
+    McBoosters.getInstance().getAnnouncer().announceBoosterStart(booster, boosterName);
     backup();
     new BukkitRunnable() {
       @Override

@@ -36,9 +36,9 @@ keybooster:
   #When players thank the booster, what should their rewards be
   ThankingRewards:
     ThankerCommands:
-      - 'cc give v Verdux 5 %Player%'
+      - 'crazycrates give v Verdux 5 %Player%'
     OwnerCommands:
-      - 'cc give v Verdux 5 %Player%'
+      - 'crazycrates give v Verdux 5 %Player%'
   #The max amount of boosters of this type that can be active
   MaxAmount: 3
   #How long should the booster go in seconds
