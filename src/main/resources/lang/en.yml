@@ -28,6 +28,12 @@ Messages:
     NoneActive: '&cThere are no boosters of that type that are active'
     Thank: '&aYou have thanked %Owner%s %BoosterType%'
     Thanked: '&aYou were thanked by %Thanker%'
+    OfflineThank:
+      Commands: '&e%Amount% &acommands were executed for you'
+      VanillaExp: '&e%Amount% &avanilla exp'
+      McRPGExp: '&e%Amount% &aMcRPG exp'
+      Money: '&e%Amount% &amoney'
+      Message: '&aWhile you were offline, you were given %Rewards% &afrom being thanked.'
   DiscordMessage:
     Started: '@here %Amount% %BoosterType% have been activated by %Players%'
     Ended: '@here %Amount% %BoosterType% that were activated by %Players% have ended'

@@ -56,7 +56,7 @@ public class FileGUI extends GUI {
               newLore.add(s.replace("%" + boosterName + "Amount%", Integer.toString(player.getBoosterAmount(boosterName)))
                       .replace("%Active" + boosterName + "s%", Integer.toString(McBoosters.getInstance().getBoosterManager().getActiveBoosters(boosterName).size()))
                       .replace("%Possible" + boosterName + "s%", Integer.toString(McBoosters.getInstance().getBoosterManager().getBoosterInfo(boosterName).getMaxAmount()))
-                      .replace("%Next" + boosterName + "EndTime%", Methods.convertMilisRemainder(Methods.color("&eH: %Hour% M: %Minute% S: %Second%")
+                      .replace("%Next" + boosterName + "EndTime%", Methods.convertMilisRemainder(Methods.color("H: %Hour% M: %Minute% S: %Second%")
                               , McBoosters.getInstance().getBoosterManager().getNextEndingBooster(boosterName))));
             }
             meta.setLore(newLore);

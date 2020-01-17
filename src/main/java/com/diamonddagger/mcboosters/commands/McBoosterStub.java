@@ -1,6 +1,7 @@
 package com.diamonddagger.mcboosters.commands;
 
 import com.diamonddagger.mcboosters.McBoosters;
+import com.diamonddagger.mcboosters.boosters.BoosterManager;
 import com.diamonddagger.mcboosters.guis.FileGUI;
 import com.diamonddagger.mcboosters.guis.GUITracker;
 import com.diamonddagger.mcboosters.players.BoosterPlayer;
@@ -39,7 +40,13 @@ public class McBoosterStub implements CommandExecutor {
             return true;
           }
           if(args.length == 1){
-            if(args[0].equalsIgnoreCase("reload")){
+            if(args[0].equalsIgnoreCase("debug")){
+              BoosterPlayer bp = McBoosters.getInstance().getPlayerManager().getPlayer(p.getUniqueId());
+              bp.setDebugMode(!bp.isDebugMode());
+              p.sendMessage(Methods.color(McBoosters.getInstance().getPluginPrefix() + (bp.isDebugMode() ? "&aDebug Mode enabled" : "&cDebug Mode disabled")));
+              return true;
+            }
+            else if(args[0].equalsIgnoreCase("reload")){
               if(p.hasPermission("mcbooster.*") || p.hasPermission("mcbooster.reload")){
                 McBoosters.getInstance().getBoosterManager().reload(McBoosters.getInstance());
                 McBoosters.getInstance().getFileManager().reloadFiles();
@@ -48,6 +55,18 @@ public class McBoosterStub implements CommandExecutor {
               }
               else{
                 p.sendMessage(Methods.color(McBoosters.getInstance().getPluginPrefix() + McBoosters.getInstance().getLangFile().getString("Messages.Util.NoPerms")));
+                return true;
+              }
+            }
+          }
+          if(args.length == 2){
+            if(args[0].equalsIgnoreCase("admin")){
+              if(args[1].equalsIgnoreCase("check")){
+                BoosterManager boosterManager = McBoosters.getInstance().getBoosterManager();
+                p.sendMessage(Methods.color("&bJobs Exp Boost: " + boosterManager.getJobsExpBoost("Miner")));
+                p.sendMessage(Methods.color("&bJobs Money Boost: " + boosterManager.getJobsMoneyBoost()));
+                p.sendMessage(Methods.color("&bMcRPG Exp Boost: " + boosterManager.getMcRPGBoost("Swords")));
+                p.sendMessage(Methods.color("&bVanilla Exp Boost: " + boosterManager.getVanillaBoost("DIAMOND_ORE")));
                 return true;
               }
             }
@@ -147,10 +166,22 @@ public class McBoosterStub implements CommandExecutor {
             return true;
           }
         }
+        if(args.length == 2){
+          if(args[0].equalsIgnoreCase("admin")){
+            if(args[1].equalsIgnoreCase("check")){
+              BoosterManager boosterManager = McBoosters.getInstance().getBoosterManager();
+              sender.sendMessage(Methods.color("&bJobs Exp Boost: " + boosterManager.getJobsExpBoost("Miner")));
+              sender.sendMessage(Methods.color("&bJobs Money Boost: " + boosterManager.getJobsMoneyBoost()));
+              sender.sendMessage(Methods.color("&bMcRPG Exp Boost: " + boosterManager.getMcRPGBoost("Swords")));
+              sender.sendMessage(Methods.color("&bVanilla Exp Boost: " + boosterManager.getVanillaBoost("DIAMOND_ORE")));
+              return true;
+            }
+          }
+        }
         // /mcbooster admin cancel %type%
         else if(args.length == 3){
           if(args[0].equalsIgnoreCase("admin")){
-            if((args[1].equalsIgnoreCase("cancel"))){
+            if(args[1].equalsIgnoreCase("cancel")){
               if(McBoosters.getInstance().getBoosterManager().getActiveBoosters(args[2]).size() > 0){
                 McBoosters.getInstance().getBoosterManager().cancelBooster(args[2]);
                 return true;
@@ -161,9 +192,9 @@ public class McBoosterStub implements CommandExecutor {
               }
             }
           }
+          sender.sendMessage(Methods.color(McBoosters.getInstance().getPluginPrefix() + McBoosters.getInstance().getLangFile().getString("Messages.Util.HelpPrompt")));
+          return true;
         }
-        sender.sendMessage(Methods.color(McBoosters.getInstance().getPluginPrefix() + McBoosters.getInstance().getLangFile().getString("Messages.Util.HelpPrompt")));
-        return true;
       }
       else{
         if(args[0].equalsIgnoreCase("admin")){

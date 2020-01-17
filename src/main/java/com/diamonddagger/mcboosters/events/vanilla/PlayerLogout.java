@@ -21,7 +21,9 @@ public class PlayerLogout implements Listener{
 	}
 
 	public static void cancelRemove(UUID uuid){
-		playerLogOutTasks.remove(uuid).cancel();
+		if(playerLogOutTasks.containsKey(uuid)){
+			playerLogOutTasks.remove(uuid).cancel();
+		}
 	}
 
 	@EventHandler

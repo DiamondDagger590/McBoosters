@@ -14,6 +14,12 @@ public class PlayerLogin implements Listener {
     PlayerManager playerManager = McBoosters.getInstance().getPlayerManager();
     if(playerManager.isPlayerStored(e.getPlayer().getUniqueId())){
       PlayerLogout.cancelRemove(e.getPlayer().getUniqueId());
+      new BukkitRunnable() {
+        @Override
+        public void run(){
+          playerManager.getPlayer(e.getPlayer().getUniqueId()).flushOfflineThanks();
+        }
+      }.runTaskLater(McBoosters.getInstance(), 15 * 20);
     }
     else{
       playerManager.initializePlayer(e.getPlayer());
@@ -23,6 +29,6 @@ public class PlayerLogin implements Listener {
       public void run(){
         McBoosters.getInstance().getBoosterManager().thankAllBoosters(e.getPlayer());
       }
-    }.runTaskLater(McBoosters.getInstance(), 40);
+    }.runTaskLater(McBoosters.getInstance(), 10 * 20);
   }
 }

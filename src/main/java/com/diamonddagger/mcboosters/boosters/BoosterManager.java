@@ -187,6 +187,10 @@ public class BoosterManager {
     }
   }
 
+  public int getAmountActive(String boosterType){
+    return activeBoosters.containsKey(boosterType) ? activeBoosters.get(boosterType).size() : 0;
+  }
+
   //PRE: validate that the user has enough boosters to activate one
   public void activateBooster(BoosterPlayer boosterPlayer, String boosterName){
     Booster booster = BoosterFactory.getBooster(boosterPlayer.getUuid(), boosterInfoMap.get(boosterName));
@@ -219,68 +223,88 @@ public class BoosterManager {
   }
 
   public double getVanillaBoost(String type){
-    double currentBoost = 1.0;
+    double currentBoost = 0;
     Parser stackEquation = new Parser(McBoosters.getInstance().getFileManager().getFile(FileManager.Files.CONFIG).getString("Configuration.StackedBoosterBoost"));
     for(String s : activeBoosters.keySet()){
       for(Booster booster : activeBoosters.get(s)){
+        if(currentBoost == 0){
+          currentBoost = booster.getBoosterInfo().getBoostWrapper().getVanillaBoost(type);
+          continue;
+        }
         stackEquation.setVariable("boost", currentBoost);
         stackEquation.setVariable("extra_boost", booster.getBoosterInfo().getBoostWrapper().getVanillaBoost(type));
         currentBoost = stackEquation.getValue();
       }
     }
-    return currentBoost;
+    return currentBoost == 0 ? 1 : currentBoost;
   }
 
   public double getMcRPGBoost(String type){
-    double currentBoost = 1.0;
+    double currentBoost = 0;
     Parser stackEquation = new Parser(McBoosters.getInstance().getFileManager().getFile(FileManager.Files.CONFIG).getString("Configuration.StackedBoosterBoost"));
     for(String s : activeBoosters.keySet()){
       for(Booster booster : activeBoosters.get(s)){
+        if(currentBoost == 0){
+          currentBoost = booster.getBoosterInfo().getBoostWrapper().getMcRPGBoost(type);
+          continue;
+        }
         stackEquation.setVariable("boost", currentBoost);
         stackEquation.setVariable("extra_boost", booster.getBoosterInfo().getBoostWrapper().getMcRPGBoost(type));
         currentBoost = stackEquation.getValue();
       }
     }
-    return currentBoost;
+    return currentBoost == 0 ? 1 : currentBoost;
   }
 
   public double getMcMMOBoost(String type){
-    double currentBoost = 1.0;
+    double currentBoost = 0;
     Parser stackEquation = new Parser(McBoosters.getInstance().getFileManager().getFile(FileManager.Files.CONFIG).getString("Configuration.StackedBoosterBoost"));
     for(String s : activeBoosters.keySet()){
       for(Booster booster : activeBoosters.get(s)){
+        if(currentBoost == 0){
+          currentBoost = booster.getBoosterInfo().getBoostWrapper().getMcMMOBoost(type);
+          continue;
+        }
         stackEquation.setVariable("boost", currentBoost);
         stackEquation.setVariable("extra_boost", booster.getBoosterInfo().getBoostWrapper().getMcMMOBoost(type));
         currentBoost = stackEquation.getValue();
       }
     }
-    return currentBoost;
+    return currentBoost == 0 ? 1 : currentBoost;
   }
 
   public double getJobsMoneyBoost(){
-    double currentBoost = 1.0;
+    double currentBoost = 0;
     Parser stackEquation = new Parser(McBoosters.getInstance().getFileManager().getFile(FileManager.Files.CONFIG).getString("Configuration.StackedBoosterBoost"));
     for(String s : activeBoosters.keySet()){
       for(Booster booster : activeBoosters.get(s)){
+        if(currentBoost == 0){
+          currentBoost = booster.getBoosterInfo().getBoostWrapper().getJobsMoneyBoost();
+          continue;
+        }
         stackEquation.setVariable("boost", currentBoost);
         stackEquation.setVariable("extra_boost", booster.getBoosterInfo().getBoostWrapper().getJobsMoneyBoost());
         currentBoost = stackEquation.getValue();
       }
     }
-    return currentBoost;
+    return currentBoost == 0 ? 1 : currentBoost;
   }
 
   public double getJobsExpBoost(String type){
-    double currentBoost = 1.0;
+    double currentBoost = 0;
     Parser stackEquation = new Parser(McBoosters.getInstance().getFileManager().getFile(FileManager.Files.CONFIG).getString("Configuration.StackedBoosterBoost"));
     for(String s : activeBoosters.keySet()){
       for(Booster booster : activeBoosters.get(s)){
+        if(currentBoost == 0){
+          currentBoost = booster.getBoosterInfo().getBoostWrapper().getJobsExpBoost(type);
+          continue;
+        }
         stackEquation.setVariable("boost", currentBoost);
         stackEquation.setVariable("extra_boost", booster.getBoosterInfo().getBoostWrapper().getJobsExpBoost(type));
         currentBoost = stackEquation.getValue();
       }
     }
-    return currentBoost;
+    return currentBoost == 0 ? 1 : currentBoost;
   }
 
   public BoosterInfo getBoosterInfo(String boosterName){

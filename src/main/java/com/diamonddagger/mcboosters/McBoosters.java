@@ -46,6 +46,7 @@ public final class McBoosters extends JavaPlugin {
     playerManager = new PlayerManager();
     announcer = new Announcer();
     if(Bukkit.getPluginManager().isPluginEnabled("McRPG")){
+      System.out.println("Enabling McRPG Hook");
       mcrpgEnabled = true;
       Bukkit.getPluginManager().registerEvents(new McRPGExpEvent(), this);
     }
@@ -55,22 +56,14 @@ public final class McBoosters extends JavaPlugin {
       Bukkit.getPluginManager().registerEvents(new JobsEvents(), this);
       eco = ((Jobs)Bukkit.getPluginManager().getPlugin("Jobs")).getEconomy();
     }
-    Bukkit.getPluginManager().registerEvents(new JobsEvents(), this);
     Bukkit.getPluginManager().registerEvents(new InvClick(), this);
     Bukkit.getPluginManager().registerEvents(new InvClose(), this);
+    Bukkit.getPluginManager().registerEvents(new BreakEvent(), this);
     Bukkit.getPluginManager().registerEvents(new KillEvent(), this);
     Bukkit.getPluginManager().registerEvents(new PlayerLogin(), this);
     Bukkit.getPluginManager().registerEvents(new PlayerLogout(), this);
     getCommand("mcbooster").setExecutor(new McBoosterStub());
     Bukkit.getServer().getPluginCommand("mcbooster").setTabCompleter(new CommandPrompt());
-  }
-
-  public BufferedEconomy getEco(){
-    if(eco == null && jobsEnabled){
-      eco = ((Jobs)Bukkit.getPluginManager().getPlugin("Jobs")).getEconomy();
-      return eco;
-    }
-    return null;
   }
 
   @Override

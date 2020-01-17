@@ -97,16 +97,28 @@ public class BaseBooster implements Booster {
     thanker.giveExp(vanillaExp);
     thanker.sendMessage(Methods.color(McBoosters.getInstance().getPluginPrefix() + McBoosters.getInstance().getLangFile().getString("Messages.Boosters.Thank")
     .replace("%Owner%", owner.getName()).replace("%BoosterType%", this.getDisplayName())));
-    if(owner.isOnline() && McBoosters.getInstance().isMcrpgEnabled()){
+    if(owner.isOnline()){
       Player onlineOwner = (Player) owner;
       onlineOwner.giveExp(vanillaExp);
-      if(mcrpgExp > 0){
+      if(mcrpgExp > 0 && McBoosters.getInstance().isMcrpgEnabled()){
         try{
           McRPGPlayer mp = PlayerManager.getPlayer(onlineOwner.getUniqueId());
           mp.giveRedeemableExp(mcrpgExp);
           mp.saveData();
         } catch(McRPGPlayerNotFoundException e){
           e.printStackTrace();
+        }
+      }
+      if(jobsMoney > 0 && McBoosters.getInstance().isJobsEnabled()){
+        Parser p = boosterInfo.getThankReward().getJobsMoneyReward();
+        int highestJob = 0;
+        for(JobProgression progression : Jobs.getPlayerManager().getJobsPlayer(boosterOwner).getJobProgression()){
+          highestJob = Math.max(progression.getLevel(), highestJob);
+        }
+        p.setVariable("highest_job", highestJob);
+        jobsMoney = p.getValue();
+        if(jobsMoney > 0){
+          Jobs.getEconomy().pay(new BufferedPayment(Bukkit.getPlayer(boosterOwner), p.getValue(), 0, 0));
         }
       }
       if(!boosterInfo.getThankReward().getOwnerCommands().isEmpty()){
@@ -154,7 +166,7 @@ public class BaseBooster implements Booster {
         }
       }
       if(!boosterInfo.getThankReward().getOwnerCommands().isEmpty()){
-        int startingIter = 1;
+        int startingIter = 0;
         if(storage.contains("CachedCommands")){
           for(String s : storage.getConfigurationSection("CachedCommands").getKeys(false)){
             startingIter++;
@@ -162,7 +174,8 @@ public class BaseBooster implements Booster {
         }
         for(String command : boosterInfo.getThankReward().getOwnerCommands()){
           startingIter++;
-          storage.set("CachedCommands." + Integer.toString(startingIter), command);
+          String key = "CachedCommands." + Integer.toString(startingIter).replace("'", "");
+          storage.set(key, command);
         }
       }
       try{

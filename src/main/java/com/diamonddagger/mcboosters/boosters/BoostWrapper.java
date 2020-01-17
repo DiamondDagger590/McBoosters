@@ -21,7 +21,7 @@ public class BoostWrapper {
     final String VANILLA_KEY = BASE_KEY + "Vanilla";
     final String MCRPG_KEY = BASE_KEY + "McRPG";
     final String MCMMO_KEY = BASE_KEY + "McMMO";
-    final String JOBS_EXP_KEY = BASE_KEY + "JobExp";
+    final String JOBS_EXP_KEY = BASE_KEY + "JobsExp";
     final String JOBS_MONEY_KEY = BASE_KEY + "JobsMoney";
 
     if(boosterFile.contains(VANILLA_KEY)){

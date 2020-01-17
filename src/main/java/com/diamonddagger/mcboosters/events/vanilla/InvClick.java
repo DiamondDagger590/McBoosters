@@ -41,15 +41,16 @@ public class InvClick implements Listener {
       if(currentGUI instanceof ConfirmGUI){
         ConfirmGUI confirmGUI = (ConfirmGUI) currentGUI;
         String boosterType = confirmGUI.getBoosterType();
+        FileConfiguration guiFile = McBoosters.getInstance().getFileManager().getFile(FileManager.Files.CONFIRM_GUI);
         //Confirm button
-        if(e.getSlot() == 11){
+        if(e.getSlot() == guiFile.getInt("AcceptItem.Slot")){
           p.closeInventory();
           mp.decrementBoosterAmount(boosterType, 1);
           McBoosters.getInstance().getBoosterManager().activateBooster(mp, boosterType);
           return;
         }
         //Close button
-        else if(e.getSlot() == 15){
+        else if(e.getSlot() == guiFile.getInt("DenyItem.Slot")){
           p.closeInventory();
           return;
         }

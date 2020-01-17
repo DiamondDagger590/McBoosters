@@ -20,6 +20,7 @@ public class CommandPrompt implements TabCompleter {
     Player p = (Player) sender;
     if(args.length == 1){
       completions.add("help");
+      completions.add("debug");
       if(p.hasPermission("mcbooster.*") || p.hasPermission("mcbooster.reload")) completions.add("reload");
       if(p.hasPermission("mcbooster.*") || p.hasPermission("mcbooster.admin.*") || p.hasPermission("mcbooster.admin.give") || p.hasPermission("mcbooster.admin.cancel"))
         completions.add("admin");
@@ -34,6 +35,8 @@ public class CommandPrompt implements TabCompleter {
             completions.add("give");
           if(p.hasPermission("mcbooster.*") || p.hasPermission("mcbooster.admin.*") || p.hasPermission("mcbooster.admin.cancel"))
             completions.add("cancel");
+          if(p.hasPermission("mcbooster.*") || p.hasPermission("mcbooster.admin.*") || p.hasPermission("mcbooster.admin.check"))
+            completions.add("check");
           break;
       }
       return StringUtil.copyPartialMatches(args[1], completions, new ArrayList<>());

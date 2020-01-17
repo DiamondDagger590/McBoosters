@@ -155,7 +155,7 @@ public class Announcer {
         }
       }
       String message = wrapper.getMessage().replace("%Amount%", Integer.toString(wrapper.getAmountAnnounced()))
-              .replace("%Players%", players.toString()).replace("%BoosterType%", wrapper.getBoosterName() + "(s)");
+              .replace("%Players%", players.toString()).replace("%BoosterType%", wrapper.getBoosterName() + "(s)").replace("%Remaining", Integer.toString(McBoosters.getInstance().getBoosterManager().getAmountActive(wrapper.getBoosterType())));
 
       if(removePings && pinged && (message.contains("@here") || message.contains("@everyone"))) {
         message = message.replace("@here", "").replace("@everyone", "");

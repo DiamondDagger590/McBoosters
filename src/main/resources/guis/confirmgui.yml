@@ -1,0 +1,17 @@
+Size: 27
+Title: '&aConfirm activation of %BoosterType%'
+AcceptItem:
+  Material: LIME_CONCRETE
+  Amount: 1
+  DisplayName: '&aActivate booster'
+  Slot: 10
+DenyItem:
+  Material: RED_CONCRETE
+  Amount: 1
+  DisplayName: '&cCancel booster activation'
+  Slot: 16
+FillerItem:
+  Material: GRAY_STAINED_GLASS_PANE
+  Amount: 1
+  DisplayName: ' '
+  Lore: {}
