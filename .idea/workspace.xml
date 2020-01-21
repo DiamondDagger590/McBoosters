@@ -1,28 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fe316024-f6a8-4539-99b1-5a8fb5243fa2" name="Default Changelist" comment="Misc Fixes">
+    <list default="true" id="fe316024-f6a8-4539-99b1-5a8fb5243fa2" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/libs/Jobs4.15.2.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/McBoosters.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/McBoosters.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/announcer/Announcer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/announcer/Announcer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/boosters/BaseBooster.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/boosters/BaseBooster.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/boosters/BoostWrapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/boosters/BoostWrapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/boosters/BoosterManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/boosters/BoosterManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/commands/CommandPrompt.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/commands/CommandPrompt.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/commands/McBoosterStub.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/commands/McBoosterStub.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/events/vanilla/BreakEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/events/vanilla/BreakEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/events/vanilla/InvClick.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/events/vanilla/InvClick.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/events/vanilla/JobsEvents.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/events/vanilla/JobsEvents.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/events/vanilla/McRPGExpEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/events/vanilla/McRPGExpEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/events/vanilla/PlayerLogin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/events/vanilla/PlayerLogin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/events/vanilla/PlayerLogout.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/events/vanilla/PlayerLogout.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/guis/ConfirmGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/guis/ConfirmGUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/guis/FileGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/guis/FileGUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/players/BoosterPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/players/BoosterPlayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/guis/confirmgui.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/guis/confirmgui.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/lang/en.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/lang/en.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/plugin.yml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -190,6 +172,8 @@
       <workItem from="1573271494963" duration="971000" />
       <workItem from="1577924864344" duration="3484000" />
       <workItem from="1577940261272" duration="1814000" />
+      <workItem from="1579233822644" duration="169000" />
+      <workItem from="1579561308337" duration="1146000" />
     </task>
     <task id="LOCAL-00001" summary="I was sick so idek what i did">
       <created>1564460252270</created>
@@ -226,7 +210,14 @@
       <option name="project" value="LOCAL" />
       <updated>1568666822770</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Resetting Computer">
+      <created>1579233948529</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1579233948529</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -251,7 +242,8 @@
     <MESSAGE value="Console support for give command/begin discord integration" />
     <MESSAGE value="Cleanup + Discord ping suppressor + tab complete" />
     <MESSAGE value="Misc Fixes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Misc Fixes" />
+    <MESSAGE value="Resetting Computer" />
+    <option name="LAST_COMMIT_MESSAGE" value="Resetting Computer" />
   </component>
   <component name="masterDetails">
     <states>
