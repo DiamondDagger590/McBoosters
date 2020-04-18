@@ -48,8 +48,8 @@ public class McBoosterStub implements CommandExecutor {
             }
             else if(args[0].equalsIgnoreCase("reload")){
               if(p.hasPermission("mcbooster.*") || p.hasPermission("mcbooster.reload")){
-                McBoosters.getInstance().getBoosterManager().reload(McBoosters.getInstance());
                 McBoosters.getInstance().getFileManager().reloadFiles();
+                McBoosters.getInstance().getBoosterManager().reload(McBoosters.getInstance());
                 p.sendMessage(Methods.color(McBoosters.getInstance().getPluginPrefix() + McBoosters.getInstance().getLangFile().getString("Messages.Admin.Reload")));
                 return true;
               }
