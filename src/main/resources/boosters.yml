@@ -32,6 +32,17 @@ keybooster:
     EndChannel: '613162865716625408'
   #The name to be used in GUIs, messages, etc
   DisplayName: '&aKey Booster'
+  #This field is optional. If it is not present, this feature won't be used for this booster.
+  #A timer begins after the first activation of a booster of this type. Subsequent booster activations
+  #will use the same timer.
+  #
+  #Once there is no longer an active booster for this type, the timer goes to sleep until the next activation
+  CommandTimer:
+    #This is in seconds
+    CommandFrequency: 300
+    #A list of all commands to be ran when the interval is triggered
+    CommandsToRun:
+      - 'crazycrates give v Verdux 5 %player%'
   #What types of boosts should this plugin provide
   #When players thank the booster, what should their rewards be
   ThankingRewards:

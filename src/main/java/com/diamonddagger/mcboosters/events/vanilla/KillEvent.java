@@ -12,6 +12,8 @@ public class KillEvent implements Listener {
   @EventHandler(priority = EventPriority.NORMAL)
   public void killEvent(EntityDeathEvent e){
     BoosterManager boosterManager = McBoosters.getInstance().getBoosterManager();
-    e.setDroppedExp((int) (e.getDroppedExp() * boosterManager.getVanillaBoost(e.getEntityType().name())));
+    
+    double boostedExp = (e.getDroppedExp() * boosterManager.getVanillaBoost(e.getEntityType().name()));
+    e.setDroppedExp((int) boostedExp);
   }
 }

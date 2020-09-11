@@ -8,7 +8,7 @@ import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class PlayerLogin implements Listener {
-
+  
   @EventHandler
   public void login(PlayerLoginEvent e){
     PlayerManager playerManager = McBoosters.getInstance().getPlayerManager();

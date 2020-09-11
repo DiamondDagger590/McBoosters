@@ -25,7 +25,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class BaseBooster implements Booster {
-
+  
   @Getter
   private BoosterInfo boosterInfo;
 
@@ -60,28 +60,39 @@ public class BaseBooster implements Booster {
 
   @Override
   public void thank(Player thanker){
+    
+    //Get the owner of the booster
     OfflinePlayer owner = Bukkit.getOfflinePlayer(boosterOwner);
     thankedPlayers.add(thanker.getUniqueId());
+    
+    //Get the variables
     int vanillaExp = (int) boosterInfo.getThankReward().getVanillaExpReward().getValue();
     int mcrpgExp = 0;
     double jobsMoney = 0;
+    
+    //If there are thanker commands, execute them
     if(!boosterInfo.getThankReward().getThankerCommands().isEmpty()){
       for(String command : boosterInfo.getThankReward().getThankerCommands()){
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("%Player%", thanker.getName()));
       }
     }
+    
+    //Check if McRPG is enabled
     if(McBoosters.getInstance().isMcrpgEnabled()){
       try{
+        
+        //Get the exp equation and replace the placeholder, and give them the redeemable exp
         McRPGPlayer mp = PlayerManager.getPlayer(thanker.getUniqueId());
         Parser p = boosterInfo.getThankReward().getMcrpgExpReward();
         p.setVariable("power_level", mp.getPowerLevel());
         mcrpgExp = (int) p.getValue();
         mp.giveRedeemableExp(mcrpgExp);
-        mp.saveData();
       } catch(McRPGPlayerNotFoundException e){
         return;
       }
     }
+    
+    //If jobs are enabled
     if(McBoosters.getInstance().isJobsEnabled()){
       Parser p = boosterInfo.getThankReward().getJobsMoneyReward();
       int highestJob = 0;
@@ -94,9 +105,15 @@ public class BaseBooster implements Booster {
         Jobs.getEconomy().pay(new BufferedPayment(thanker, p.getValue(), 0, 0));
       }
     }
+    
+    //Give the thanker vanilla exp
     thanker.giveExp(vanillaExp);
+    
+    //Send the player a message
     thanker.sendMessage(Methods.color(McBoosters.getInstance().getPluginPrefix() + McBoosters.getInstance().getLangFile().getString("Messages.Boosters.Thank")
     .replace("%Owner%", owner.getName()).replace("%BoosterType%", this.getDisplayName())));
+    
+    //If the owner is online
     if(owner.isOnline()){
       Player onlineOwner = (Player) owner;
       onlineOwner.giveExp(vanillaExp);
@@ -104,7 +121,6 @@ public class BaseBooster implements Booster {
         try{
           McRPGPlayer mp = PlayerManager.getPlayer(onlineOwner.getUniqueId());
           mp.giveRedeemableExp(mcrpgExp);
-          mp.saveData();
         } catch(McRPGPlayerNotFoundException e){
           e.printStackTrace();
         }
@@ -129,6 +145,7 @@ public class BaseBooster implements Booster {
       onlineOwner.sendMessage(Methods.color(McBoosters.getInstance().getPluginPrefix() + McBoosters.getInstance().getLangFile().getString("Messages.Boosters.Thanked")
       .replace("%Thanker%", thanker.getDisplayName())));
     }
+    
     else{
       File playerStorageFolder = new File(McBoosters.getInstance().getDataFolder(), File.separator + "playerdata");
       File playerFile = new File(playerStorageFolder, File.separator + owner.getUniqueId().toString() + ".yml");

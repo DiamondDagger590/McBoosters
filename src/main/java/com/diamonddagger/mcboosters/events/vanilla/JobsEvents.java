@@ -2,6 +2,7 @@ package com.diamonddagger.mcboosters.events.vanilla;
 
 import com.diamonddagger.mcboosters.McBoosters;
 import com.diamonddagger.mcboosters.players.BoosterPlayer;
+import com.diamonddagger.mcboosters.types.BoostType;
 import com.diamonddagger.mcboosters.util.Methods;
 import com.gamingmesh.jobs.api.JobsExpGainEvent;
 import com.gamingmesh.jobs.api.JobsPaymentEvent;
@@ -14,7 +15,10 @@ public class JobsEvents implements Listener {
   @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
   public void money(JobsPaymentEvent e){
     String message = "&bJobs Money Boost- Money Before: &e" + e.getAmount();
-    e.setAmount(e.getAmount() * McBoosters.getInstance().getBoosterManager().getJobsMoneyBoost());
+    double boostedMoney = e.getAmount() * McBoosters.getInstance().getBoosterManager().getJobsMoneyBoost();
+    double difference = boostedMoney - e.getAmount();
+    e.setAmount(boostedMoney);
+    
     message += " &bMoney After: &e" + e.getAmount();
     if(e.getPlayer().isOnline()){
       BoosterPlayer bp = McBoosters.getInstance().getPlayerManager().getPlayer(e.getPlayer().getUniqueId());
@@ -27,8 +31,12 @@ public class JobsEvents implements Listener {
   @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
   public void exp(JobsExpGainEvent e){
     String message = "&bJobs Exp Boost For " + e.getJob().getName() + "- Exp Before: &e" + e.getExp();
-    e.setExp(e.getExp() * McBoosters.getInstance().getBoosterManager().getJobsExpBoost(e.getJob().getName()));
+    double boostedExp = e.getExp() * McBoosters.getInstance().getBoosterManager().getJobsExpBoost(e.getJob().getName());
+    double difference = boostedExp - e.getExp();
+    e.setExp(boostedExp);
     message += " &bExp After: &e" + e.getExp();
+    
+    McBoosters.getInstance().getBoosterManager().addBoostedExp(e.getPlayer().getUniqueId(), BoostType.JOBS, difference);
     if(e.getPlayer().isOnline()){
       BoosterPlayer bp = McBoosters.getInstance().getPlayerManager().getPlayer(e.getPlayer().getUniqueId());
       if(bp.isDebugMode()){

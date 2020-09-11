@@ -3,6 +3,8 @@ package com.diamonddagger.mcboosters.boosters;
 import lombok.Getter;
 import org.bukkit.configuration.file.FileConfiguration;
 
+import java.util.List;
+
 public class BoosterInfo {
 
   @Getter
@@ -15,6 +17,8 @@ public class BoosterInfo {
   private int duration;
   @Getter
   private BoostWrapper boostWrapper;
+  @Getter
+  private BoosterCommandTimer boosterCommandTimer;
   @Getter
   private boolean isDiscordSupportEnabled;
   @Getter
@@ -31,6 +35,11 @@ public class BoosterInfo {
     if(isDiscordSupportEnabled){
       startChannel = boosterFile.getString(boosterName + ".DiscordSupport.StartChannel");
       endChannel = boosterFile.getString(boosterName + ".DiscordSupport.EndChannel");
+    }
+    if(boosterFile.contains(boosterName + ".CommandTimer")){
+      int commandFrequency = boosterFile.getInt(boosterName + ".CommandTimer.CommandFrequency");
+      List<String> commands = boosterFile.getStringList(boosterName + ".CommandTimer.CommandsToRun");
+      boosterCommandTimer = new BoosterCommandTimer(commandFrequency, commands, boosterName);
     }
     this.boostWrapper = new BoostWrapper(boosterFile, boosterName);
   }
