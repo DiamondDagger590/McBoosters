@@ -76,6 +76,12 @@ public class BoosterManager {
           }
           
           Booster booster = BoosterFactory.getBooster(boosterBackup, key, boosterInfoMap.get(boosterName));
+          
+         if(boosterInfoMap.containsKey(boosterID) && boosterInfoMap.get(boosterID).getBoosterCommandTimer() != null
+          && !boosterInfoMap.get(boosterID).getBoosterCommandTimer().isRunning()){
+           boosterInfoMap.get(boosterID).getBoosterCommandTimer().startRunnable();
+         }
+         
           if(activeBoosters.containsKey(boosterName)){
             activeBoosters.get(boosterName).add(booster);
           }

@@ -47,6 +47,7 @@ public class InvClick implements Listener {
           p.closeInventory();
           mp.decrementBoosterAmount(boosterType, 1);
           McBoosters.getInstance().getBoosterManager().activateBooster(mp, boosterType);
+          mp.save();
           return;
         }
         //Close button

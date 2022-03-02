@@ -5,7 +5,14 @@ import com.diamonddagger.mcboosters.boosters.BoosterManager;
 import com.diamonddagger.mcboosters.commands.CommandPrompt;
 import com.diamonddagger.mcboosters.commands.McBoosterStub;
 import com.diamonddagger.mcboosters.discord.DiscordManager;
-import com.diamonddagger.mcboosters.events.vanilla.*;
+import com.diamonddagger.mcboosters.events.vanilla.BreakEvent;
+import com.diamonddagger.mcboosters.events.vanilla.InvClick;
+import com.diamonddagger.mcboosters.events.vanilla.InvClose;
+import com.diamonddagger.mcboosters.events.vanilla.JobsEvents;
+import com.diamonddagger.mcboosters.events.vanilla.KillEvent;
+import com.diamonddagger.mcboosters.events.vanilla.McRPGExpEvent;
+import com.diamonddagger.mcboosters.events.vanilla.PlayerLogin;
+import com.diamonddagger.mcboosters.events.vanilla.PlayerLogout;
 import com.diamonddagger.mcboosters.players.PlayerManager;
 import com.diamonddagger.mcboosters.util.FileManager;
 import com.gamingmesh.jobs.Jobs;
@@ -13,6 +20,7 @@ import com.gamingmesh.jobs.economy.BufferedEconomy;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class McBoosters extends JavaPlugin {
@@ -70,6 +78,10 @@ public final class McBoosters extends JavaPlugin {
   public void onDisable(){
     boosterManager.backup();
     announcer.forceAnnounce();
+    
+    for(Player player : Bukkit.getOnlinePlayers()){
+      playerManager.getPlayer(player.getUniqueId()).save();
+    }
   }
 
   @Override

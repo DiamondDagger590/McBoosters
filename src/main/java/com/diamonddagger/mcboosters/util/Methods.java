@@ -125,7 +125,7 @@ public class Methods {
   }
 
   public static String convertMilisRemainder(String s, long time){
-    if(time == 0){
+    if(time <= 0){
       return color(s.replace("%Hour%", Long.toString(0)).replace("%Minute%", Long.toString(0)).replace("%Second%", Long.toString(0)));
 
     }

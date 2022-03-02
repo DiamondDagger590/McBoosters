@@ -1,39 +1,34 @@
 plugins {
     id 'java'
-    id 'maven'
-    id 'io.franzbecker.gradle-lombok' version '1.14'
+    id 'maven-publish'
+    id 'io.freefair.lombok' version '6.3.0'
     id 'com.github.johnrengelman.shadow' version '2.0.4'
 }
 
-//from now on this is how you'll change version
-def versionObj = new Version(major: 1, minor: 0, patch: 6, state: 'SNAPSHOT')
-version = "${versionObj.toString()}"
+//RECODE.RELEASE.PATCH.DEVELOPMENT
+version = "1.0.0.8"
 
 group 'com.diamonddagger590'
-version = "${versionObj.toString()}"
-
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
 
 repositories {
     mavenCentral()
-    jcenter()
     mavenLocal()
     maven { url 'https://repo.aikar.co/content/groups/aikar/' }
     maven { url 'https://jitpack.io' }
     maven { url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
     maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
     maven { url 'https://nexus.articdive.de/repository/maven-public/' }
-    maven { url 'http://nexus.hc.to/content/repositories/pub_releases' }
+    maven { url 'https://nexus.hc.to/content/repositories/pub_releases' }
 }
 
 dependencies {
-    compileOnly 'org.spigotmc:spigot-api:1.16.2-R0.1-SNAPSHOT'
-    compileOnly 'de.articdive:EnumToYAML:1.0-SNAPSHOT'
-    compileOnly 'com.discordsrv:discordsrv:1.18.4'
-    compileOnly files('libs/McRPG-1.1.1-BETA.jar')
-    compileOnly files('libs/Jobs4.15.2.jar')
+    compileOnly 'org.spigotmc:spigot-api:1.18.1-R0.1-SNAPSHOT'
+    compileOnly 'com.github.DiamondDagger590:EnumToYaml:1.0'
     compileOnly 'net.milkbowl.vault:VaultAPI:1.7'
+    compileOnly 'us.eunoians:McRPG:1.5.0.0'
+
+    compileOnly files('libs/DiscordSRV-1.19.1.jar')
+    compileOnly files('libs/Jobs4.15.2.jar')
 }
 
 /*processResources {
@@ -51,25 +46,6 @@ artifacts {
     archives shadowJar
 }
 
-lombok {
-    version = "1.18.4"
-    sha256 = ""
-}
-
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
-}
-
-class Version {
-
-    String major, minor, patch, state, full
-
-    String getFullVersion() {
-        full = "$major.$minor.$patch-$state"
-        return full
-    }
-
-    String toString() {
-        getFullVersion()
-    }
 }

@@ -1,25 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="fe316024-f6a8-4539-99b1-5a8fb5243fa2" name="Default Changelist" comment="Resetting Computer">
-      <change afterPath="$PROJECT_DIR$/.idea/McBoosters.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/boosters/BoosterCommandTimer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/boosters/BoosterRewardWrapper.java" afterDir="false" />
+    <list default="true" id="fe316024-f6a8-4539-99b1-5a8fb5243fa2" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/libs/DiscordSRV-1.19.1.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/boosters/TimerCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/McBoosters.iml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/discord.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/discord.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/boosters/BaseBooster.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/boosters/BaseBooster.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/McBoosters.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/McBoosters.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/boosters/BoosterCommandTimer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/boosters/BoosterCommandTimer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/boosters/BoosterInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/boosters/BoosterInfo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/boosters/BoosterManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/boosters/BoosterManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/commands/CommandPrompt.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/commands/CommandPrompt.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/events/vanilla/BreakEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/events/vanilla/BreakEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/events/vanilla/JobsEvents.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/events/vanilla/JobsEvents.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/events/vanilla/KillEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/events/vanilla/KillEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/events/vanilla/McRPGExpEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/events/vanilla/McRPGExpEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/events/vanilla/PlayerLogin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/events/vanilla/PlayerLogin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/events/vanilla/InvClick.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/events/vanilla/InvClick.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/util/Methods.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/util/Methods.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/boosters.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/boosters.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -58,6 +59,11 @@
                 <item name="McBoosters" type="f1a62948:ProjectNode" />
                 <item name="Tasks" type="e4a08cd1:TasksNode" />
                 <item name="build" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="McBoosters" type="f1a62948:ProjectNode" />
+                <item name="Run Configurations" type="7b0102dc:RunConfigurationsNode" />
               </path>
             </expand>
             <select />
@@ -114,6 +120,9 @@
       </RecentBranches>
     </option>
   </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
   <component name="ProjectId" id="1QhPIn65LRu0S3o8wWgeaexsqO7" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -131,9 +140,15 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/libs" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="settings.editor.selected.configurable" value="reference.projectsettings.compiler.annotationProcessors" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.project.gradle" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\diamo\IdeaProjects\McBoosters\libs" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\colem\Desktop\Projects\McBoosters\libs" />
       <recent name="C:\Users\lpucmy1\IdeaProjects\McBoosters\src\main\java\com\diamonddagger\mcboosters\util\parser" />
@@ -141,7 +156,7 @@
       <recent name="C:\Users\lpucmy1\IdeaProjects\McBoosters" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Gradle.McBoosters [build]">
     <configuration name="McBoosters [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -158,15 +173,62 @@
         </option>
         <option name="vmOptions" />
       </ExternalSystemSettings>
-      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="McBoosters [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="clean" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="McBoosters [jar]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="jar" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Gradle.McBoosters [build]" />
+        <item itemvalue="Gradle.McBoosters [clean]" />
+        <item itemvalue="Gradle.McBoosters [jar]" />
       </list>
     </recent_temporary>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -233,7 +295,18 @@
       <workItem from="1592014235479" duration="951000" />
       <workItem from="1599534937972" duration="2923000" />
       <workItem from="1599678535752" duration="6707000" />
-      <workItem from="1599777008379" duration="4082000" />
+      <workItem from="1599777008379" duration="5173000" />
+      <workItem from="1600054981647" duration="7217000" />
+      <workItem from="1600537156867" duration="21000" />
+      <workItem from="1600701510869" duration="729000" />
+      <workItem from="1602872591728" duration="1440000" />
+      <workItem from="1602877822431" duration="2239000" />
+      <workItem from="1607206054582" duration="32000" />
+      <workItem from="1610077088175" duration="371000" />
+      <workItem from="1610677776505" duration="14000" />
+      <workItem from="1620162395007" duration="4000" />
+      <workItem from="1646249512309" duration="1552000" />
+      <workItem from="1646252008868" duration="294000" />
     </task>
     <task id="LOCAL-00001" summary="I was sick so idek what i did">
       <created>1564460252270</created>
@@ -277,11 +350,18 @@
       <option name="project" value="LOCAL" />
       <updated>1579233948529</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Add tracking for total exp gained DUE to the booster and added support for boosters to run commands over time">
+      <created>1599829175430</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1599829175430</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="2" />
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -293,7 +373,6 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="I was sick so idek what i did" />
@@ -302,29 +381,12 @@
     <MESSAGE value="Cleanup + Discord ping suppressor + tab complete" />
     <MESSAGE value="Misc Fixes" />
     <MESSAGE value="Resetting Computer" />
-    <option name="LAST_COMMIT_MESSAGE" value="Resetting Computer" />
+    <MESSAGE value="Add tracking for total exp gained DUE to the booster and added support for boosters to run commands over time" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add tracking for total exp gained DUE to the booster and added support for boosters to run commands over time" />
   </component>
-  <component name="WindowStateProjectService">
-    <state x="574" y="116" key="#com.intellij.ide.util.MemberChooser" timestamp="1599688081450">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="574" y="116" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1599688081450" />
-    <state width="1476" height="195" key="GridCell.Tab.0.bottom" timestamp="1592019340365">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1476" height="195" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1592019340365" />
-    <state width="1476" height="195" key="GridCell.Tab.0.center" timestamp="1592019340365">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1476" height="195" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1592019340365" />
-    <state width="1476" height="195" key="GridCell.Tab.0.left" timestamp="1592019340365">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1476" height="195" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1592019340365" />
-    <state width="1476" height="195" key="GridCell.Tab.0.right" timestamp="1592019340365">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1476" height="195" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1592019340365" />
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
   <component name="masterDetails">
     <states>
