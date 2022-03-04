@@ -3,6 +3,7 @@ package com.diamonddagger.mcboosters.players;
 import com.diamonddagger.mcboosters.McBoosters;
 import com.diamonddagger.mcboosters.util.Methods;
 import com.gamingmesh.jobs.Jobs;
+import com.gamingmesh.jobs.container.CurrencyType;
 import com.gamingmesh.jobs.economy.BufferedPayment;
 import com.google.common.util.concurrent.AtomicDouble;
 import lombok.Getter;
@@ -93,7 +94,7 @@ public class BoosterPlayer {
             if(McBoosters.getInstance().isJobsEnabled() && config.contains("CachedRewards.JobsMoney")){
              // Bukkit.broadcastMessage("4o");
               money.set(config.getDouble("CachedRewards.JobsMoney"));
-              Jobs.getEconomy().pay(new BufferedPayment(p,  money.get(),0, 0));
+              Jobs.getEconomy().pay(new BufferedPayment(p, Map.of(CurrencyType.MONEY, money.get())));
               config.set("CachedRewards.JobsMoney", null);
             }
           }
@@ -228,7 +229,7 @@ public class BoosterPlayer {
           if(McBoosters.getInstance().isJobsEnabled() && config.contains("CachedRewards.JobsMoney")){
           //  Bukkit.broadcastMessage("3f");
             money.set(config.getDouble("CachedRewards.JobsMoney"));
-            Jobs.getEconomy().pay(new BufferedPayment(p,  money.get(),0, 0));
+            Jobs.getEconomy().pay(new BufferedPayment(p,  Map.of(CurrencyType.MONEY, money.get())));
             config.set("CachedRewards.JobsMoney", null);
           }
         }
