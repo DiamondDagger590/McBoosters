@@ -5,23 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fe316024-f6a8-4539-99b1-5a8fb5243fa2" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/libs/DiscordSRV-1.19.1.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/boosters/TimerCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/McBoosters.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libs/Jobs5.0.1.4.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/McBoosters.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/McBoosters.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/boosters/BoosterCommandTimer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/boosters/BoosterCommandTimer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/boosters/BoosterInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/boosters/BoosterInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/boosters/BoosterManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/boosters/BoosterManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/events/vanilla/InvClick.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/events/vanilla/InvClick.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/util/Methods.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/diamonddagger/mcboosters/util/Methods.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/boosters.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/boosters.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libs/Jobs4.13.0.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/libs/Jobs4.15.2.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/libs/McRPG-1.1.1-BETA.jar" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -95,7 +84,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitToolBoxStore">
-    <option name="projectConfigVersion" value="2" />
+    <option name="projectConfigVersion" value="4" />
     <option name="recentBranches">
       <RecentBranches>
         <option name="branchesForRepo">
@@ -146,17 +135,18 @@
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.project.gradle" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\diamo\IdeaProjects\McBoosters\libs" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\diamo\IdeaProjects\McBoosters\libs" />
       <recent name="C:\Users\colem\Desktop\Projects\McBoosters\libs" />
       <recent name="C:\Users\lpucmy1\IdeaProjects\McBoosters\src\main\java\com\diamonddagger\mcboosters\util\parser" />
       <recent name="C:\Users\lpucmy1\IdeaProjects\McBoosters\src\main\java\com\diamonddagger\mcboosters\guis" />
       <recent name="C:\Users\lpucmy1\IdeaProjects\McBoosters" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\diamo\IdeaProjects\McBoosters\libs" />
+    </key>
   </component>
-  <component name="RunManager" selected="Gradle.McBoosters [build]">
+  <component name="RunManager" selected="Gradle.McBoosters [jar]">
     <configuration name="McBoosters [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -222,9 +212,9 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.McBoosters [build]" />
-        <item itemvalue="Gradle.McBoosters [clean]" />
         <item itemvalue="Gradle.McBoosters [jar]" />
+        <item itemvalue="Gradle.McBoosters [clean]" />
+        <item itemvalue="Gradle.McBoosters [build]" />
       </list>
     </recent_temporary>
   </component>
@@ -306,7 +296,8 @@
       <workItem from="1610677776505" duration="14000" />
       <workItem from="1620162395007" duration="4000" />
       <workItem from="1646249512309" duration="1552000" />
-      <workItem from="1646252008868" duration="294000" />
+      <workItem from="1646252008868" duration="345000" />
+      <workItem from="1646433384246" duration="85000" />
     </task>
     <task id="LOCAL-00001" summary="I was sick so idek what i did">
       <created>1564460252270</created>
@@ -357,7 +348,14 @@
       <option name="project" value="LOCAL" />
       <updated>1599829175430</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Update against new McRPG and add some new stuff from idk when">
+      <created>1646252328758</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1646252328758</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -382,7 +380,8 @@
     <MESSAGE value="Misc Fixes" />
     <MESSAGE value="Resetting Computer" />
     <MESSAGE value="Add tracking for total exp gained DUE to the booster and added support for boosters to run commands over time" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add tracking for total exp gained DUE to the booster and added support for boosters to run commands over time" />
+    <MESSAGE value="Update against new McRPG and add some new stuff from idk when" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update against new McRPG and add some new stuff from idk when" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

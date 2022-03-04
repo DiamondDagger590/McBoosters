@@ -28,7 +28,7 @@ dependencies {
     compileOnly 'us.eunoians:McRPG:1.5.0.0'
 
     compileOnly files('libs/DiscordSRV-1.19.1.jar')
-    compileOnly files('libs/Jobs4.15.2.jar')
+    compileOnly files('libs/Jobs5.0.1.4.jar')
 }
 
 /*processResources {

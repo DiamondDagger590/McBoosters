@@ -4,6 +4,7 @@ import com.diamonddagger.mcboosters.McBoosters;
 import com.diamonddagger.mcboosters.util.Methods;
 import com.diamonddagger.mcboosters.util.parser.Parser;
 import com.gamingmesh.jobs.Jobs;
+import com.gamingmesh.jobs.container.CurrencyType;
 import com.gamingmesh.jobs.container.JobProgression;
 import com.gamingmesh.jobs.economy.BufferedPayment;
 import lombok.Getter;
@@ -20,6 +21,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -102,7 +104,7 @@ public class BaseBooster implements Booster {
       p.setVariable("highest_job", highestJob);
       jobsMoney = p.getValue();
       if(jobsMoney > 0){
-        Jobs.getEconomy().pay(new BufferedPayment(thanker, p.getValue(), 0, 0));
+        Jobs.getEconomy().pay(new BufferedPayment(thanker, Map.of(CurrencyType.MONEY, p.getValue())));
       }
     }
     
@@ -134,7 +136,7 @@ public class BaseBooster implements Booster {
         p.setVariable("highest_job", highestJob);
         jobsMoney = p.getValue();
         if(jobsMoney > 0){
-          Jobs.getEconomy().pay(new BufferedPayment(Bukkit.getPlayer(boosterOwner), p.getValue(), 0, 0));
+          Jobs.getEconomy().pay(new BufferedPayment(Bukkit.getPlayer(boosterOwner), Map.of(CurrencyType.MONEY, p.getValue())));
         }
       }
       if(!boosterInfo.getThankReward().getOwnerCommands().isEmpty()){
